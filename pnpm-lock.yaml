@@ -317,6 +317,9 @@ importers:
       '@next/mdx':
         specifier: 14.1.4
         version: 14.1.4(@mdx-js/loader@3.0.1)(@mdx-js/react@3.0.1)
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       next:
         specifier: 14.1.4
         version: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
@@ -333,6 +336,9 @@ importers:
       '@svgr/webpack':
         specifier: 8.1.0
         version: 8.1.0(typescript@5.4.3)
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/mdx':
         specifier: 2.0.12
         version: 2.0.12
@@ -628,6 +634,9 @@ importers:
       fs-extra:
         specifier: 11.2.0
         version: 11.2.0
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       prettier:
         specifier: 3.2.5
         version: 3.2.5
