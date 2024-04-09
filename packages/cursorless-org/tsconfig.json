@@ -25,6 +25,9 @@
     },
     {
       "path": "../common"
+    },
+    {
+      "path": "../test-case-component"
     }
   ],
   "exclude": ["node_modules"]
