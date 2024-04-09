@@ -656,9 +656,21 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
+      '@types/jest':
+        specifier: 29.5.12
+        version: 29.5.12
       '@types/react':
         specifier: 18.2.71
         version: 18.2.71
+      jest:
+        specifier: 29.7.0
+        version: 29.7.0(@types/node@18.18.2)(ts-node@10.9.2)
+      jest-environment-jsdom:
+        specifier: 29.7.0
+        version: 29.7.0
+      ts-jest:
+        specifier: 29.1.2
+        version: 29.1.2(@babel/core@7.24.3)(esbuild@0.20.2)(jest@29.7.0)(typescript@5.4.3)
 
   packages/test-harness:
     dependencies:
