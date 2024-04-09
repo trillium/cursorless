@@ -1295,17 +1295,26 @@
     "vscode-uri": "^3.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.14",
     "@types/fs-extra": "^11.0.4",
+    "@types/glob": "^8.1.0",
     "@types/js-yaml": "^4.0.9",
+    "@types/lodash": "4.17.0",
     "@types/lodash-es": "^4.17.12",
+    "@types/mocha": "^10.0.6",
     "@types/nearley": "^2.11.5",
     "@types/node": "^24.10.1",
     "@types/semver": "^7.7.1",
     "@types/sinon": "^21.0.0",
+    "@types/tinycolor2": "1.4.6",
+    "@types/uuid": "^9.0.8",
     "@types/vscode": "1.95.0",
+    "chai": "^5.1.0",
     "esbuild": "^0.27.0",
     "fast-xml-parser": "^5.3.2",
     "fs-extra": "^11.3.2",
+    "glob": "^10.3.10",
+    "mocha": "^10.3.0",
     "sinon": "^21.0.0"
   }
 }
