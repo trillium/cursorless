@@ -30,6 +30,7 @@
   "dependencies": {
     "@cursorless/cheatsheet": "workspace:*",
     "@cursorless/common": "workspace:*",
+    "@cursorless/test-case-component": "workspace:*",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^15.5.6",
