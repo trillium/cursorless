@@ -29,29 +29,29 @@ describe("generateHtml", () => {
     ).toMatchInlineSnapshot(`
       "<pre
         class=\\"shiki\\"
-        style=\\"background-color: var(--shiki-color-background)\\"
+        style=\\"background-color: var(--shiki-background)\\"
       >
         <code>
           <span class=\\"line\\">
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">oneLine</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">1</span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
           <span class=\\"line selection\\">
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">line2</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">2</span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
         </code>
       </pre>;
@@ -77,34 +77,34 @@ describe("generateHtml", () => {
     ).toMatchInlineSnapshot(`
       "<pre
         class=\\"shiki\\"
-        style=\\"background-color: var(--shiki-color-background)\\"
+        style=\\"background-color: var(--shiki-background)\\"
       >
         <code>
           <span class=\\"line\\">
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span
               className=\\"selection\\"
               style=\\"\\"
             >
               <span style=\\"color: var(--shiki-token-constant)\\">oneLine</span>
             </span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">1</span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
           <span class=\\"line\\">
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">line2</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">2</span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
         </code>
       </pre>;
@@ -131,23 +131,23 @@ describe("generateHtml", () => {
     ).toMatchInlineSnapshot(`
       "<pre
         class=\\"shiki\\"
-        style=\\"background-color: var(--shiki-color-background)\\"
+        style=\\"background-color: var(--shiki-background)\\"
       >
         <code>
           <span class=\\"line\\">
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span
               className=\\"selection\\"
               style=\\"\\"
             >
               <span style=\\"color: var(--shiki-token-constant)\\">oneLine</span>
-              <span style=\\"color: var(--shiki-color-text)\\"> </span>
+              <span style=\\"color: var(--shiki-foreground)\\"> </span>
               <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-              <span style=\\"color: var(--shiki-color-text)\\"> </span>
+              <span style=\\"color: var(--shiki-foreground)\\"> </span>
               <span style=\\"color: var(--shiki-token-constant)\\">1</span>
             </span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
         </code>
       </pre>;
@@ -174,27 +174,27 @@ describe("generateHtml", () => {
     ).toMatchInlineSnapshot(`
       "<pre
         class=\\"shiki\\"
-        style=\\"background-color: var(--shiki-color-background)\\"
+        style=\\"background-color: var(--shiki-background)\\"
       >
         <code>
           <span class=\\"line\\">
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">one</span>
             <span
               className=\\"selection\\"
               style=\\"\\"
             >
               <span style=\\"color: var(--shiki-token-constant)\\">Line</span>
-              <span style=\\"color: var(--shiki-color-text)\\"> </span>
+              <span style=\\"color: var(--shiki-foreground)\\"> </span>
               <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-              <span style=\\"color: var(--shiki-color-text)\\"> </span>
+              <span style=\\"color: var(--shiki-foreground)\\"> </span>
               <span style=\\"color: var(--shiki-token-string-expression)\\">
                 &quot;li
               </span>
             </span>
             <span style=\\"color: var(--shiki-token-string-expression)\\">ne&quot;</span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
         </code>
       </pre>;
@@ -221,12 +221,12 @@ describe("generateHtml", () => {
     ).toMatchInlineSnapshot(`
       "<pre
         class=\\"shiki\\"
-        style=\\"background-color: var(--shiki-color-background)\\"
+        style=\\"background-color: var(--shiki-background)\\"
       >
         <code>
           <span class=\\"line\\">
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">one</span>
             <span
               className=\\"selection\\"
@@ -235,11 +235,11 @@ describe("generateHtml", () => {
               <span style=\\"color: var(--shiki-token-constant)\\">Li</span>
             </span>
             <span style=\\"color: var(--shiki-token-constant)\\">ne</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">1</span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
         </code>
       </pre>;
@@ -272,12 +272,12 @@ describe("generateHtml", () => {
     ).toMatchInlineSnapshot(`
       "<pre
         class=\\"shiki\\"
-        style=\\"background-color: var(--shiki-color-background)\\"
+        style=\\"background-color: var(--shiki-background)\\"
       >
         <code>
           <span class=\\"line\\">
             <span style=\\"color: var(--shiki-token-keyword)\\">const</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span
               className=\\"thatMark\\"
               style=\\"\\"
@@ -296,11 +296,11 @@ describe("generateHtml", () => {
             >
               <span style=\\"color: var(--shiki-token-constant)\\">ne</span>
             </span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-keyword)\\">=</span>
-            <span style=\\"color: var(--shiki-color-text)\\"> </span>
+            <span style=\\"color: var(--shiki-foreground)\\"> </span>
             <span style=\\"color: var(--shiki-token-constant)\\">1</span>
-            <span style=\\"color: var(--shiki-color-text)\\">;</span>
+            <span style=\\"color: var(--shiki-foreground)\\">;</span>
           </span>
         </code>
       </pre>;
