@@ -75,7 +75,7 @@ export async function loadFixture(
       after,
     };
   } catch (e) {
-    console.log("error", filepath, e);
+    console.log("error", e);
     console.log(JSON.stringify(data, null, 2));
     throw e;
   }
