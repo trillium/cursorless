@@ -34,7 +34,7 @@ export class ContainingScopeStage implements ModifierStage {
   run(target: Target): Target[] {
     const { scopeType, ancestorIndex = 0 } = this.modifier;
 
-    const scopeHandler = this.scopeHandlerFactory.create(
+    const scopeHandler = this.scopeHandlerFactory.maybeCreate(
       scopeType,
       target.editor.document.languageId,
     );
@@ -45,23 +45,16 @@ export class ContainingScopeStage implements ModifierStage {
         .run(target);
     }
 
-    const containingScope = getContainingScopeTarget(
+    const containingScopes = getContainingScopeTarget(
       target,
       scopeHandler,
       ancestorIndex,
     );
 
-    if (containingScope == null) {
-      if (scopeType.type === "collectionItem") {
-        // For `collectionItem`, fall back to generic implementation
-        return this.modifierStageFactory
-          .getLegacyScopeStage(this.modifier)
-          .run(target);
-      }
-
-      throw new NoContainingScopeError(this.modifier.scopeType.type);
+    if (containingScopes == null) {
+      throw new NoContainingScopeError(scopeType.type);
     }
 
-    return containingScope;
+    return containingScopes;
   }
 }

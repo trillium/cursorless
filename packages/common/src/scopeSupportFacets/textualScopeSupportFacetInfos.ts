@@ -83,4 +83,23 @@ export const textualScopeSupportFacetInfos: Record<
     },
     isIteration: true,
   },
+  "interior.surroundingPair": {
+    description: "The interior scope of a surrounding pair",
+    scopeType: {
+      type: "interior",
+    },
+  },
+  "collectionItem.textual": {
+    description: "A text based collection item",
+    scopeType: {
+      type: "collectionItem",
+    },
+  },
+  "collectionItem.textual.iteration": {
+    description: "Iteration scope for text based collection items",
+    scopeType: {
+      type: "collectionItem",
+    },
+    isIteration: true,
+  },
 };

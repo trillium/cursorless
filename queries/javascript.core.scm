@@ -18,6 +18,7 @@
     abstract_method_signature
     public_field_definition
     field_definition
+    generic_type
   )
 )
 
@@ -272,6 +273,19 @@
   (#has-multiple-children-of-type? @_dummy variable_declarator)
 )
 
+;;!! let foo, bar;
+;;!      ^^^  ^^^
+(
+  (lexical_declaration
+    (variable_declarator)? @_.leading.endOf
+    .
+    (variable_declarator) @collectionItem
+    .
+    (variable_declarator)? @_.trailing.startOf
+  )
+  (#insertion-delimiter! @collectionItem ", ")
+)
+
 (expression_statement
   [
     ;; name:
@@ -441,6 +455,16 @@
   (template_string)
 ] @string
 
+;;  taggedTemplate`hello ${world}`
+;;! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(call_expression
+  function: (_) @pairDelimiter.start
+  arguments: (template_string
+    .
+    "`" @pairDelimiter.end
+  )
+)
+
 ;;!! // comment
 ;;!  ^^^^^^^^^^
 (comment) @comment
@@ -583,9 +607,16 @@
 
 (switch_default) @branch
 
-;;!! switch () {}
-;;!  ^^^^^^^^^^^^
-(switch_statement) @branch.iteration @condition.iteration
+;;!! switch () { }
+;;!             ^
+(switch_statement
+  body: (_
+    .
+    "{" @branch.iteration.start.endOf @condition.iteration.start.endOf
+    "}" @branch.iteration.end.startOf @condition.iteration.end.startOf
+    .
+  )
+) @branch.iteration.domain @condition.iteration.domain
 
 ;;!! if () {}
 ;;!  ^^^^^^^^

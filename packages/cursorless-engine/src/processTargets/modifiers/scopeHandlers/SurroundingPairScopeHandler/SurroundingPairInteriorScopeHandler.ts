@@ -24,7 +24,7 @@ export class SurroundingPairInteriorScopeHandler extends BaseScopeHandler {
         requireStrongContainment: true,
       },
       this.languageId,
-    )!;
+    );
   }
 
   get iterationScopeType() {
@@ -45,10 +45,6 @@ export class SurroundingPairInteriorScopeHandler extends BaseScopeHandler {
     );
 
     for (const scope of scopes) {
-      if (this.scopeType.requireSingleLine && !scope.domain.isSingleLine) {
-        continue;
-      }
-
       yield {
         editor,
         domain: scope.domain,

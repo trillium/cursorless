@@ -4,6 +4,14 @@
 
 ;; import javascript.core.scm
 
+;;!! class Aaa { bbb(); }
+;;!              ^^^^^^
+(_
+  (method_signature) @statement.start
+  .
+  ";"? @statement.end
+)
+
 ;;!! function aaa(bbb = "ddd") {}
 ;;!               ^^^--------
 (required_parameter
@@ -26,6 +34,10 @@
   value: (_) @value
 ) @_.domain
 
+;;!! enum Aaa {}
+;;!  ^^^^^^^^^^^
+(enum_declaration) @type
+
 ;;!! function aaa(bbb: Ccc = "ddd") {}
 ;;!               ^^^-------------
 (required_parameter
@@ -39,8 +51,14 @@
 ) @_.domain
 
 ;; Define these here because these node types don't exist in javascript.
-(
+(_
   [
+    ;;!! function foo();
+    ;;!  ^^^^^^^^^^^^^^^
+    (function_signature
+      name: (_) @functionName @name
+    )
+
     ;;!! class Foo { foo() {} }
     ;;!              ^^^^^^^^
     ;;!! interface Foo { foo(): void; }
@@ -80,7 +98,7 @@
   ";"? @namedFunction.end @functionName.domain.end @name.domain.end
 )
 
-(
+(_
   ;;!! (public | private | protected) foo = ...;
   ;;!  -----------------------------------------
   (public_field_definition
@@ -92,7 +110,7 @@
   ";"? @_.domain.end
 )
 
-(
+(_
   ;;!! (public | private | protected) foo: Bar = ...;
   ;;!  ----------------------------------------------
   (public_field_definition
@@ -340,7 +358,7 @@
 ;;!                   ^^^^
 ;;!                   xxxxxx
 ;;!                   ------------
-(
+(_
   (property_signature
     name: (_) @collectionKey @type.leading.endOf
     type: (_
@@ -348,6 +366,7 @@
       (_) @type @collectionKey.trailing.startOf
     )
   ) @_.domain.start
+  .
   ";"? @_.domain.end
 )
 
@@ -372,11 +391,17 @@
 )
 
 ;; Statements with optional trailing `;`
-(
+(_
   [
     (property_signature)
     (public_field_definition)
     (abstract_method_signature)
   ] @statement.start
+  .
   ";"? @statement.end
+)
+
+;; () => number
+(function_type
+  "=>" @disqualifyDelimiter
 )

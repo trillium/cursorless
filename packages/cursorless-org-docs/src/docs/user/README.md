@@ -233,7 +233,11 @@ The modifier `"grand"` can be used to select the parent of the containing syntac
 - `"take grand statement air"`
 - `"take grand funk air"`
 
-For example, the command `"take grand statement [blue] air"` will select that parent statement of the statement containing the token with a blue hat over the letter 'a'.
+For example, the command `"take grand statement [blue] air"` will select the parent statement of the statement containing the token with a blue hat over the letter 'a'.
+
+You can also repeat `"grand"` multiple times.
+
+For example, the command `"take grand grand statement [blue] air"` will select the parent statement of the parent statement of the statement containing the token with a blue hat over the letter 'a'.
 
 ##### Sub-token modifiers
 
@@ -309,6 +313,8 @@ The modifiers `"head"` and `"tail"` can be used to expand a target through the b
 - `"take tail"`: select from the cursor to the end of the line
 - `"take head air"`: selects the mark through to start of the line
 - `"take tail air"`: selects the mark through to the end of the line
+
+When inside a surrounding pair (eg parentheses, brackets, etc) the head/tail modifier will only expand to the interior of that pair instead of the whole line. You can explicitly say `"head line"` or `"tail line"` to get the line behavior.
 
 When followed by a modifier, they will expand their input to the start or end of the given modifier range. For example:
 
@@ -529,9 +535,12 @@ Despite the name cursorless, some of the most basic commands in cursorless are f
 
 Note that when combined with list targets, `take`/`pre`/`post` commands will result in multiple cursors.
 
+- `"take <TARGET>"`: Selects the given target.
 - `"pre <TARGET>"`: Places the cursor before the given target.
 - `"post <TARGET>"`: Places the cursor after the given target.
-- `"take <TARGET>"`: Selects the given target.
+- `"append <TARGET>"`: Selects the given target, while preserving your existing selections.
+- `"append pre <TARGET>"`: Adds a new cursor before the given target, while preserving your existing selections.
+- `"append post <TARGET>"`: Adds a new cursor after the given target, while preserving your existing selections.
 - `"give <TARGET>"`: Deselects the given target.
 
 eg:
@@ -611,14 +620,19 @@ For example:
 
 - `"drink <TARGET>"`: Inserts a new line above the target line, and moves the cursor to the newly created line
 - `"pour <TARGET>"`: Inserts a new line below the target line, and moves the cursor to the newly created line
+- `"drop <TARGET>"`: Inserts an empty line above the target line (without moving the cursor)
+- `"float <TARGET>"`: Inserts an empty line below the target line (without moving the cursor)
+- `"puff <TARGET>"`: Inserts empty lines/spaces around the target (without moving the cursor)
 
 eg: `pour blue air` will insert empty line below the token containing letter 'a' with a blue hat and moves the cursor to the new line.
 
-Note: `"drink"` and `"pour"` are actually a bit more versatile than just lines.
-If you use a [syntactic scope](#syntactic-scopes) modifier on the target, then`"drink"` and `"pour"` will do the
+Note: `"drink"`, `"pour"`, `"drop"`, `"float"`, and `"puff"` are actually more versatile than just handling lines.
+If you use a [syntactic scope](#syntactic-scopes) modifier on the target, they will do the
 appropriate insertions to prepare the text for a new instance of that scope.
 
 eg: `pour item air` will insert a comma and space after the air item, and place the cursor after the inserted characters.
+eg: `puff token air` will insert spaces around the token with a hat over the letter 'a'.
+eg: `float item air` will insert a comma after the item containing letter 'a' with a hat.
 
 ### Homophones
 

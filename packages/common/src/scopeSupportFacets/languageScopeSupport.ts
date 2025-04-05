@@ -4,10 +4,12 @@ import { clojureScopeSupport } from "./clojure";
 import { cppScopeSupport } from "./cpp";
 import { csharpScopeSupport } from "./csharp";
 import { cssScopeSupport } from "./css";
+import { dartScopeSupport } from "./dart";
 import { goScopeSupport } from "./go";
 import { htmlScopeSupport } from "./html";
 import { javaScopeSupport } from "./java";
 import { javascriptScopeSupport } from "./javascript";
+import { javascriptreactScopeSupport } from "./javascriptreact";
 import { jsonScopeSupport } from "./json";
 import { jsoncScopeSupport } from "./jsonc";
 import { jsonlScopeSupport } from "./jsonl";
@@ -35,11 +37,12 @@ export const languageScopeSupport: StringRecord<LanguageScopeSupportFacetMap> =
     cpp: cppScopeSupport,
     csharp: csharpScopeSupport,
     css: cssScopeSupport,
+    dart: dartScopeSupport,
     go: goScopeSupport,
     html: htmlScopeSupport,
     java: javaScopeSupport,
     javascript: javascriptScopeSupport,
-    javascriptreact: javascriptScopeSupport,
+    javascriptreact: javascriptreactScopeSupport,
     json: jsonScopeSupport,
     jsonc: jsoncScopeSupport,
     jsonl: jsonlScopeSupport,

@@ -8,7 +8,7 @@ import {
   resolveCliArgsFromVSCodeExecutablePath,
   runTests,
 } from "@vscode/test-electron";
-import * as cp from "node:child_process";
+import { sync } from "cross-spawn";
 import * as os from "node:os";
 import * as path from "node:path";
 
@@ -35,7 +35,15 @@ export async function launchVscodeAndRunTests(extensionTestsPath: string) {
     // NB: We include the exact version here instead of in `test.yml` so that
     // we don't have to update the branch protection rules every time we bump
     // the legacy VSCode version.
-    const vscodeVersion = useLegacyVscode ? "1.79.2" : "stable";
+
+    // NB: Because of a CI crashing issue the vscode version is pinned.
+    // https://github.com/cursorless-dev/cursorless/issues/2878
+
+    const vscodeVersion = useLegacyVscode
+      ? "1.82.0"
+      : os.platform() === "win32"
+        ? "stable"
+        : "1.97.2";
     const vscodeExecutablePath = await downloadAndUnzipVSCode(vscodeVersion);
     const [cli, ...args] =
       resolveCliArgsFromVSCodeExecutablePath(vscodeExecutablePath);
@@ -53,7 +61,7 @@ export async function launchVscodeAndRunTests(extensionTestsPath: string) {
     console.log(`cli: ${cli}`);
     console.log(JSON.stringify(extensionInstallArgs, null, 2));
 
-    const { status, signal, error } = cp.spawnSync(cli, extensionInstallArgs, {
+    const { status, signal, error } = sync(cli, extensionInstallArgs, {
       encoding: "utf-8",
       stdio: "inherit",
     });

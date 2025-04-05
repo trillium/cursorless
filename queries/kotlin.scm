@@ -437,14 +437,13 @@
   (_) @value
 ) @_.domain
 
-;; Disabled due to Cursorless error ("invalid capture") caused by "return@"
-;; (jump_expression
-;;   "return@"
-;;   .
-;;   (label)
-;;   .
-;;   (_) @value
-;; ) @_.domain
+(jump_expression
+  "return@"
+  .
+  (label)
+  .
+  (_) @value
+) @_.domain
 
 (_
   (function_body
@@ -509,7 +508,6 @@
   (annotated_lambda) @argumentOrParameter
 )
 
-;; Note: trailing lambda mixed with regular arguments doesn't work due to bad tree sitter parse.
 (call_expression
   (call_suffix) @argumentOrParameter.iteration
 ) @argumentOrParameter.iteration.domain

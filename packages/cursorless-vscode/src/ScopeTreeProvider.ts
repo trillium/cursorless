@@ -112,7 +112,7 @@ export class ScopeTreeProvider implements TreeDataProvider<MyTreeItem> {
   getChildren(element?: MyTreeItem): MyTreeItem[] {
     if (element == null) {
       void this.possiblyShowUpdateTalonMessage();
-      return getSupportCategories();
+      return getSupportCategories(this.hasLegacyScopes());
     }
 
     if (element instanceof SupportCategoryTreeItem) {
@@ -156,7 +156,15 @@ export class ScopeTreeProvider implements TreeDataProvider<MyTreeItem> {
     }
   }
 
-  getScopeTypesWithSupport(scopeSupport: ScopeSupport): ScopeSupportTreeItem[] {
+  private hasLegacyScopes(): boolean {
+    return this.supportLevels.some(
+      (supportLevel) => supportLevel.support === ScopeSupport.supportedLegacy,
+    );
+  }
+
+  private getScopeTypesWithSupport(
+    scopeSupport: ScopeSupport,
+  ): ScopeSupportTreeItem[] {
     return this.supportLevels
       .filter(
         (supportLevel) =>
@@ -202,17 +210,21 @@ export class ScopeTreeProvider implements TreeDataProvider<MyTreeItem> {
   }
 }
 
-function getSupportCategories(): SupportCategoryTreeItem[] {
+function getSupportCategories(
+  includeLegacy: boolean,
+): SupportCategoryTreeItem[] {
   return [
     new SupportCategoryTreeItem(ScopeSupport.supportedAndPresentInEditor),
     new SupportCategoryTreeItem(ScopeSupport.supportedButNotPresentInEditor),
-    new SupportCategoryTreeItem(ScopeSupport.supportedLegacy),
+    ...(includeLegacy
+      ? [new SupportCategoryTreeItem(ScopeSupport.supportedLegacy)]
+      : []),
     new SupportCategoryTreeItem(ScopeSupport.unsupported),
   ];
 }
 
 class ScopeSupportTreeItem extends TreeItem {
-  public readonly label!: TreeItemLabel;
+  public declare readonly label: TreeItemLabel;
 
   /**
    * @param scopeTypeInfo The scope type info

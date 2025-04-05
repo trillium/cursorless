@@ -126,6 +126,7 @@ function isLanguageSpecific(scopeType: ScopeType): boolean {
     case "functionName":
     case "ifStatement":
     case "instance":
+    case "interior":
     case "list":
     case "map":
     case "name":
@@ -158,6 +159,7 @@ function isLanguageSpecific(scopeType: ScopeType): boolean {
     case "environment":
     case "textFragment":
     case "disqualifyDelimiter":
+    case "pairDelimiter":
       return true;
 
     case "character":

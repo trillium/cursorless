@@ -60,8 +60,8 @@ export async function runCustomSpokenFormScopeInfoTest() {
       await unlink(cursorlessTalonStateJsonPath);
       // Sleep to ensure that the scope support provider has time to update
       // before the next test starts
-      await sleep(250);
-    } catch (e) {
+      await sleep(400);
+    } catch (_e) {
       // Do nothing
     }
   }
