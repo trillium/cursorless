@@ -27,9 +27,17 @@ function createHtmlGenerator(data: DataFixture, debug = false) {
   const command = data.command;
   const raw = data;
   const testCaseStates = {
-    before: { ...data.initialState, documentContents: data.initialState.documentContents ?? "", stepName: "before" },
+    before: {
+      ...data.initialState,
+      documentContents: data.initialState.documentContents ?? "",
+      stepName: "before",
+    },
     during: getDuringSnapshot(data),
-    after: { ...data.finalState, documentContents: data.finalState?.documentContents ?? "", stepName: "after" },
+    after: {
+      ...data.finalState,
+      documentContents: data.finalState?.documentContents ?? "",
+      stepName: "after",
+    },
   };
 
   /**
@@ -41,11 +49,20 @@ function createHtmlGenerator(data: DataFixture, debug = false) {
   async function generate(stepName: StepNameType) {
     const state = testCaseStates[stepName];
     if (!state) {
-      if (debug) { console.error(`Error in ${stepName} ${raw.command.spokenForm}`); }
+      if (debug) {
+        console.error(`Error in ${stepName} ${raw.command.spokenForm}`);
+      }
       return "Error";
     }
-    const extendedState = { ...state, stepName, selections: state.selections ?? [] };
-    const decorations = await getDecorations({ snapshot: extendedState, command });
+    const extendedState = {
+      ...state,
+      stepName,
+      selections: state.selections ?? [],
+    };
+    const decorations = await getDecorations({
+      snapshot: extendedState,
+      command,
+    });
     const { documentContents } = state;
     const htmlArray: string[] = [];
     let codeBody;
@@ -60,7 +77,9 @@ function createHtmlGenerator(data: DataFixture, debug = false) {
       codeBody = marker.codeToHtml(documentContents, options);
       htmlArray.push(codeBody);
     } catch (error) {
-      if (debug) { console.error("Failed to generate code body:", error); }
+      if (debug) {
+        console.error("Failed to generate code body:", error);
+      }
       codeBody = "";
     }
 
@@ -101,7 +120,8 @@ function getDuringSnapshot(data: DataFixture): ExtendedTestCaseSnapshot {
   // so Shiki decorations stay in bounds and don't go out of range.
   const base =
     data.finalState &&
-      (data.finalState.documentContents?.split("\n").length > data.initialState.documentContents?.split("\n").length)
+    data.finalState.documentContents?.split("\n").length >
+      data.initialState.documentContents?.split("\n").length
       ? data.finalState
       : data.initialState;
   // Exclude sourceMark and thatMark from the DURING snapshot

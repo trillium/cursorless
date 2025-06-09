@@ -2,13 +2,13 @@ import { loadTestCaseFixture } from "../loadTestCaseFixture";
 import { loadYamlFiles } from "./loadYamlFiles";
 
 export interface LoadAndProcessFixturesOptions {
-    fixturesDir: string;
-    allowList?: string[];
-    deps: {
-        fs: any;
-        path: any;
-        yaml: any;
-    };
+  fixturesDir: string;
+  allowList?: string[];
+  deps: {
+    fs: any;
+    path: any;
+    yaml: any;
+  };
 }
 
 /**
@@ -21,35 +21,35 @@ export interface LoadAndProcessFixturesOptions {
  * @returns {Promise<any[]>} Array of processed test case data, each with a `raw` property containing the original YAML object.
  */
 export async function loadAndProcessFixtures({
-    fixturesDir,
-    allowList,
-    deps,
+  fixturesDir,
+  allowList,
+  deps,
 }: LoadAndProcessFixturesOptions) {
-    const fixtures = await loadYamlFiles({
-        dir: fixturesDir,
-        deps,
-        allowList,
-    });
-    const data_errors: any[] = [];
+  const fixtures = await loadYamlFiles({
+    dir: fixturesDir,
+    deps,
+    allowList,
+  });
+  const data_errors: any[] = [];
 
-    const data = (
-        await Promise.all(
-            fixtures.map(async (val: any) => {
-                try {
-                    const fixture = await loadTestCaseFixture(val);
-                    return { ...fixture, raw: val };
-                } catch (err) {
-                    console.error(err);
-                    data_errors.push(val);
-                    return null;
-                }
-            })
-        )
-    ).filter((test: any) => test != null);
+  const data = (
+    await Promise.all(
+      fixtures.map(async (val: any) => {
+        try {
+          const fixture = await loadTestCaseFixture(val);
+          return { ...fixture, raw: val };
+        } catch (err) {
+          console.error(err);
+          data_errors.push(val);
+          return null;
+        }
+      }),
+    )
+  ).filter((test: any) => test != null);
 
-    if (data_errors.length > 0) {
-        console.error("data errors:", data_errors);
-    }
+  if (data_errors.length > 0) {
+    console.error("data errors:", data_errors);
+  }
 
-    return data;
+  return data;
 }

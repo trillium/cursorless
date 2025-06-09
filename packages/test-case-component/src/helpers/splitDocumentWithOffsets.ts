@@ -5,15 +5,17 @@
  * @param {string} documentContents - The string to split into lines.
  * @returns {{ line: string, offset: number }[]} An array of objects with line content and cumulative offset.
  */
-function splitDocumentWithOffsets(documentContents: string): { line: string; offset: number }[] {
-    const lines = documentContents.split("\n");
-    let cumulativeOffset = 0;
+function splitDocumentWithOffsets(
+  documentContents: string,
+): { line: string; offset: number }[] {
+  const lines = documentContents.split("\n");
+  let cumulativeOffset = 0;
 
-    return lines.map((line) => {
-        const result = { line, offset: cumulativeOffset };
-        cumulativeOffset += line.length + 1; // +1 for the newline character
-        return result;
-    });
+  return lines.map((line) => {
+    const result = { line, offset: cumulativeOffset };
+    cumulativeOffset += line.length + 1; // +1 for the newline character
+    return result;
+  });
 }
 
-export { splitDocumentWithOffsets }
+export { splitDocumentWithOffsets };

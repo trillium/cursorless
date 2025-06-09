@@ -5,8 +5,8 @@
  * @returns {string} The HTML string for the clipboard, or an empty string if clipboard is undefined.
  */
 export function renderClipboard(clipboard: string | undefined): string {
-    if (!clipboard) {
-        return "";
-    }
-    return `<pre><code>clipboard: ${clipboard}</pre></code>`;
+  if (!clipboard) {
+    return "";
+  }
+  return `<pre><code>clipboard: ${clipboard}</pre></code>`;
 }

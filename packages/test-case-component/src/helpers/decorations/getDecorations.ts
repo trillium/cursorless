@@ -11,27 +11,27 @@ import type { DecorationItem } from "shiki";
 import { createDecorations } from "../index";
 
 export async function getDecorations({
-    snapshot,
-    command
+  snapshot,
+  command,
 }: {
-    snapshot: ExtendedTestCaseSnapshot;
-    command: Command;
-}): Promise<DecorationItem[]> {
-    const { messages, flashes, highlights } = snapshot;
-    const potentialMarks = snapshot.marks || {};
-    const lines = snapshot.documentContents.split("\n");
-    // Use StepNameType for stepName, and provide a fallback if undefined
-    const stepName: StepNameType = snapshot.stepName ?? "error";
-    const obj = {
-        marks: potentialMarks,
-        ide: { messages, flashes, highlights },
-        command,
-        lines,
-        selections: snapshot.selections,
-        thatMark: snapshot.thatMark,
-        sourceMark: snapshot.sourceMark,
-        stepName,
-    };
-    const decorations = createDecorations(obj);
-    return decorations;
+  snapshot: ExtendedTestCaseSnapshot;
+  command: Command;
+}): Promise {
+  const { messages, flashes, highlights } = snapshot;
+  const potentialMarks = snapshot.marks || {};
+  const lines = snapshot.documentContents.split("\n");
+  // Use StepNameType for stepName, and provide a fallback if undefined
+  const stepName: StepNameType = snapshot.stepName ?? "error";
+  const obj = {
+    marks: potentialMarks,
+    ide: { messages, flashes, highlights },
+    command,
+    lines,
+    selections: snapshot.selections,
+    thatMark: snapshot.thatMark,
+    sourceMark: snapshot.sourceMark,
+    stepName,
+  };
+  const decorations = createDecorations(obj);
+  return decorations;
 }

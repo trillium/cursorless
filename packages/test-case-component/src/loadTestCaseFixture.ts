@@ -24,9 +24,7 @@ function extractHtml(step: string | { html: string; data: any[] }): string {
   return typeof step === "string" ? step : step.html;
 }
 
-export async function loadTestCaseFixture(
-  data: LoadFixtureProps
-): Promise<PortableTestCaseFixture> {
+export async function loadTestCaseFixture(data: LoadFixtureProps): Promise {
   const { before, during, after } = await generateHtml(data);
   const { command, filename, languageId: language } = data;
   return {
@@ -38,4 +36,3 @@ export async function loadTestCaseFixture(
     language,
   };
 }
-

@@ -4,48 +4,51 @@ import type { classesMap } from "../classesMap";
 import { getDecorationClass } from "../classesMap";
 
 function getMarkDecorations({
-    marks,
-    lines
+  marks,
+  lines,
 }: {
-    marks?: SerializedMarks;
-    lines?: string[]
+  marks?: SerializedMarks;
+  lines?: string[];
 }): DecorationItem[] {
-    const decorations: DecorationItem[] = [];
+  const decorations: DecorationItem[] = [];
 
-    Object.entries(marks || {}).forEach(([key, { start }]) => {
-        const [hatType, letter] = key.split(".") as [keyof typeof classesMap, string];
+  Object.entries(marks || {}).forEach(([key, { start }]) => {
+    const [hatType, letter] = key.split(".") as [
+      keyof typeof classesMap,
+      string,
+    ];
 
-        const markLineStart = start.line
+    const markLineStart = start.line;
 
-        if (!lines) {
-            console.warn("Lines are undefined. Skipping decoration generation.");
-            return [];
-        }
-        const currentLine = lines[markLineStart]
+    if (!lines) {
+      console.warn("Lines are undefined. Skipping decoration generation.");
+      return [];
+    }
+    const currentLine = lines[markLineStart];
 
-        const searchStart = start.character;
-        const nextLetterIndex = currentLine.indexOf(letter, searchStart);
+    const searchStart = start.character;
+    const nextLetterIndex = currentLine.indexOf(letter, searchStart);
 
-        if (nextLetterIndex === -1) {
-            console.warn(
-                `Letter"${letter}" not found after position ${searchStart} in line:"${currentLine}"`
-            );
-            return; // Skip this mark if the letter is not found
-        }
+    if (nextLetterIndex === -1) {
+      console.warn(
+        `Letter"${letter}" not found after position ${searchStart} in line:"${currentLine}"`,
+      );
+      return; // Skip this mark if the letter is not found
+    }
 
-        const decorationItem: DecorationItem = {
-            start,
-            end: { line: start.line, character: nextLetterIndex + 1 },
-            properties: {
-                class: getDecorationClass(hatType),
-            },
-            alwaysWrap: true,
-        }
+    const decorationItem: DecorationItem = {
+      start,
+      end: { line: start.line, character: nextLetterIndex + 1 },
+      properties: {
+        class: getDecorationClass(hatType),
+      },
+      alwaysWrap: true,
+    };
 
-        decorations.push(decorationItem);
-    });
+    decorations.push(decorationItem);
+  });
 
-    return decorations;
+  return decorations;
 }
 
-export { getMarkDecorations }
+export { getMarkDecorations };

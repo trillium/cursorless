@@ -1,9 +1,14 @@
-import type { TestCaseFixture, TestCaseSnapshot, PlainSpyIDERecordedValues, TargetPlainObject } from "@cursorless/common";
+import type {
+  TestCaseFixture,
+  TestCaseSnapshot,
+  PlainSpyIDERecordedValues,
+  TargetPlainObject,
+} from "@cursorless/common";
 import type { BundledLanguage } from "shiki";
 
-
-
-export type StepType = { stepName: "initialState" | "middleState" | "finalState" };
+export type StepType = {
+  stepName: "initialState" | "middleState" | "finalState";
+};
 export type DataFixture = TestCaseFixture & StepType;
 
 export interface LoadFixtureProps extends DataFixture {
@@ -17,12 +22,16 @@ export type Lang = BundledLanguage;
 export type StepNameType = "before" | "during" | "after";
 
 export type ExtendedTestCaseSnapshot = TestCaseSnapshot &
-  Partial<PlainSpyIDERecordedValues> & {
+  Partial & {
     thatMark?: TargetPlainObject[];
     sourceMark?: TargetPlainObject[];
     stepName: StepNameType;
   };
 
 export type LineRange = { type: string; start: number; end: number };
-export type PositionRange = { type: string; start: { line: number; character: number }; end: { line: number; character: number } };
+export type PositionRange = {
+  type: string;
+  start: { line: number; character: number };
+  end: { line: number; character: number };
+};
 export type RangeType = LineRange | PositionRange;
