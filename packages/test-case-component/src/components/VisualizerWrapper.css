@@ -45,3 +45,102 @@
 [data-theme="dark"]:root .visualizer-state-title {
   color: #4a9eff;
 }
+
+/* Jumbotron animated carousel styles */
+.visualizer-jumbotron .jumbotron-container {
+  position: relative;
+}
+
+.jumbotron-controls {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.jumbotron-play-pause {
+  padding: 0.5rem;
+  background-color: #e8f4f8;
+  border: 1px solid #0366d6;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background 0.2s;
+}
+
+[data-theme="dark"]:root .jumbotron-play-pause {
+  background-color: #2d3748;
+  border-color: #4a9eff;
+}
+
+.jumbotron-play-pause:hover {
+  background-color: #d0e8f0;
+}
+
+[data-theme="dark"]:root .jumbotron-play-pause:hover {
+  background-color: #3a4658;
+}
+
+.jumbotron-state {
+  display: none;
+}
+
+.jumbotron-state.active {
+  display: block;
+}
+
+.jumbotron-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+}
+
+.jumbotron-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #0366d6;
+  background-color: #e8f4f8;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+[data-theme="dark"]:root .jumbotron-dot {
+  border-color: #4a9eff;
+  background-color: #2d3748;
+}
+
+.jumbotron-dot:hover {
+  background-color: #d0e8f0;
+  transform: scale(1.2);
+}
+
+[data-theme="dark"]:root .jumbotron-dot:hover {
+  background-color: #3a4658;
+}
+
+.jumbotron-dot.active {
+  background-color: #0366d6;
+  border-color: #0366d6;
+  transform: scale(1.3);
+}
+
+[data-theme="dark"]:root .jumbotron-dot.active {
+  background-color: #4a9eff;
+  border-color: #4a9eff;
+}
+
+.jumbotron-dot:focus-visible {
+  outline: 2px solid #0366d6;
+  outline-offset: 2px;
+}
+
+[data-theme="dark"]:root .jumbotron-dot:focus-visible {
+  outline-color: #4a9eff;
+}

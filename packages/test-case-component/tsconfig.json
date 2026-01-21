@@ -6,7 +6,11 @@
     "skipLibCheck": true,
     "lib": ["es2022", "dom"]
   },
-  "references": [],
+  "references": [
+    {
+      "path": "../common"
+    }
+  ],
   "include": [
     "src/**/*.ts",
     "src/**/*.json",

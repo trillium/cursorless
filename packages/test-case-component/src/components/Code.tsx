@@ -15,6 +15,9 @@ interface Props {
   // New: Support for fixture state from .yml files
   fixtureState?: CursorlessFixtureState;
 
+  // Force minimum number of lines to render
+  minLines?: number;
+
   link?: {
     name: string;
     url: string;
@@ -27,6 +30,7 @@ export function Code({
   renderWhitespace,
   decorations,
   fixtureState,
+  minLines,
   link,
   children,
 }: Props) {
@@ -39,9 +43,17 @@ export function Code({
       ? convertFixtureStateToDecorations(fixtureState)
       : decorations;
 
-    const code = renderWhitespace
+    let code = renderWhitespace
       ? children.replaceAll(" ", "␣").replaceAll("\t", "⭾")
       : children;
+
+    if (minLines) {
+      const currentLines = code.split("\n").length;
+      if (currentLines < minLines) {
+        code += "\n".repeat(minLines - currentLines);
+      }
+    }
+
     codeToHtml(code, {
       lang: getFallbackLanguage(languageId),
       theme: "nord",
@@ -56,7 +68,15 @@ export function Code({
         setHtml(html);
       })
       .catch(console.error);
-  }, [languageId, renderWhitespace, decorations, fixtureState, link, children]);
+  }, [
+    languageId,
+    renderWhitespace,
+    decorations,
+    fixtureState,
+    minLines,
+    link,
+    children,
+  ]);
 
   if (!html) {
     return <div className="code-container" />;
@@ -73,7 +93,7 @@ export function Code({
   };
 
   const renderLink = () => {
-    if (link == null) {
+    if (!link?.url || !link?.name) {
       return null;
     }
     return (

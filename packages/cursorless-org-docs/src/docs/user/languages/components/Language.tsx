@@ -38,7 +38,7 @@ export function Language({ languageId }: Props) {
             {languageId}.
           </p>
           {languageFixtures.map((fixture, index) => (
-            <VisualizerWrapper key={index} fixture={fixture} />
+            <VisualizerWrapper key={index} fixture={fixture} animated={true} />
           ))}
         </>
       )}
