@@ -154,6 +154,7 @@ const config: Config = {
   plugins: [
     "./src/plugins/tailwind-plugin.ts",
     "./src/plugins/scope-tests-plugin.ts",
+    "./src/plugins/recorded-tests-plugin.ts",
   ],
 
   themeConfig: {
