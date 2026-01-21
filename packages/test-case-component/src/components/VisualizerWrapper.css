@@ -1,14 +1,8 @@
 .visualizer-wrapper {
   margin: 2rem 0;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
 }
 
 [data-theme="dark"]:root .visualizer-wrapper {
-  background-color: #1e1e1e;
-  border-color: #444;
 }
 
 .visualizer-command {
@@ -16,7 +10,6 @@
   padding: 0.5rem;
   background-color: #e8f4f8;
   border-left: 4px solid #0366d6;
-  border-radius: 4px;
   font-size: 0.95rem;
 }
 

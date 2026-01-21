@@ -80,6 +80,10 @@ function convertSelectionsToHighlights(
   const highlights: Highlight[] = [];
 
   for (const selection of selections) {
+    if (!selection.anchor || !selection.active) {
+      continue;
+    }
+
     if (selection.type === "line") {
       // Convert line selection to full-line character range
       highlights.push(

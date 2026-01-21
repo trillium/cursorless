@@ -39,18 +39,41 @@ export function VisualizerWrapper({
   fixture,
   showCommand = true,
 }: VisualizerWrapperProps) {
+  // Validate fixture has required data
+  if (!fixture.initialState || !fixture.initialState.documentContents) {
+    console.error(
+      "Invalid fixture: missing initialState.documentContents",
+      fixture,
+    );
+    return (
+      <div className="visualizer-wrapper">Error: Invalid fixture data</div>
+    );
+  }
+
+  if (!fixture.finalState || !fixture.finalState.documentContents) {
+    console.error(
+      "Invalid fixture: missing finalState.documentContents",
+      fixture,
+    );
+    return (
+      <div className="visualizer-wrapper">Error: Invalid fixture data</div>
+    );
+  }
+
   const code = fixture.initialState.documentContents;
 
   // Convert decorations to the fixture state format for DURING state
   const duringState: CursorlessFixtureState | undefined = fixture.decorations
     ? {
         ...fixture.initialState,
-        decorations: fixture.decorations.map((decoration) => ({
-          name: decoration.name,
-          type: "selection" as const,
-          anchor: decoration.start,
-          active: decoration.end,
-        })),
+        decorations: fixture.decorations
+          .filter((decoration) => decoration.start && decoration.end)
+          .map((decoration) => ({
+            name: decoration.name,
+            type: "selection" as const,
+            anchor: decoration.start,
+            active: decoration.end,
+          })),
       }
     : undefined;
 

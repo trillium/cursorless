@@ -19,16 +19,15 @@ interface RecordedTests {
 }
 
 export function Language({ languageId }: Props) {
-  const recordedTests = usePluginData("recorded-tests-plugin") as RecordedTests;
-  const languageFixtures = recordedTests.fixturesByLanguage[languageId] || [];
+  const recordedTests = usePluginData("recorded-tests-plugin") as
+    | RecordedTests
+    | undefined;
+
+  const languageFixtures =
+    recordedTests?.fixturesByLanguage?.[languageId] || [];
 
   return (
     <>
-      <DynamicTOC />
-      <ScrollToHashId />
-
-      <ScopeVisualizer languageId={languageId} />
-
       {languageFixtures.length > 0 && (
         <>
           <h2>Recorded Test Examples</h2>
@@ -38,11 +37,16 @@ export function Language({ languageId }: Props) {
             {languageFixtures.length === 1 ? "example" : "examples"} for{" "}
             {languageId}.
           </p>
-          {languageFixtures.map((fixture, index) => (
+          {languageFixtures.slice(0, 5).map((fixture, index) => (
             <VisualizerWrapper key={index} fixture={fixture} />
           ))}
         </>
       )}
+
+      <DynamicTOC />
+      <ScrollToHashId />
+
+      <ScopeVisualizer languageId={languageId} />
     </>
   );
 }
