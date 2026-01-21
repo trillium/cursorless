@@ -31,10 +31,11 @@ function getStyleString(style: Style): string {
   );
   return (
     `background-color: ${style.backgroundColor};` +
-    `border-color: ${borderColor};` +
-    `border-style: ${getBorderStyle(style.borderStyle)};` +
+    `outline-color: ${borderColor};` +
+    `outline-style: ${getBorderStyle(style.borderStyle)};` +
     `border-radius: ${getBorderRadius(style.borderRadius)};` +
-    `border-width: ${BORDER_WIDTH};`
+    `outline-width: ${BORDER_WIDTH};` +
+    `outline-offset: -${BORDER_WIDTH};`
   );
 }
 
