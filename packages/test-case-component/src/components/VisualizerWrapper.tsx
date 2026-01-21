@@ -1,7 +1,18 @@
 import React from "react";
 import { Code } from "./Code";
 import type { CursorlessFixtureState } from "./fixtureAdapter";
+import { convertFixtureStateWithFlashes } from "./fixtureAdapter";
 import "./VisualizerWrapper.css";
+
+/**
+ * Represents a flash highlight from ide.flashes in the fixture
+ */
+export interface FlashDecoration {
+  style: string;
+  type: string;
+  start: { line: number; character: number };
+  end: { line: number; character: number };
+}
 
 /**
  * Represents a complete test case fixture from a .yml recorded test file
@@ -13,12 +24,7 @@ export interface TestCaseFixture {
   };
   initialState: CursorlessFixtureState;
   finalState: CursorlessFixtureState;
-  decorations?: Array<{
-    name?: string;
-    type: string;
-    start: { line: number; character: number };
-    end: { line: number; character: number };
-  }>;
+  flashes?: FlashDecoration[];
 }
 
 interface VisualizerWrapperProps {
@@ -41,17 +47,10 @@ export function VisualizerWrapper({
 }: VisualizerWrapperProps) {
   const code = fixture.initialState.documentContents;
 
-  // Convert decorations to the fixture state format for DURING state
-  const duringState: CursorlessFixtureState | undefined = fixture.decorations
-    ? {
-        ...fixture.initialState,
-        decorations: fixture.decorations.map((decoration) => ({
-          name: decoration.name,
-          type: "selection" as const,
-          anchor: decoration.start,
-          active: decoration.end,
-        })),
-      }
+  // Combine initial state with flashes for DURING state visualization
+  // This shows both the marks/selections AND the flash highlights
+  const duringDecorations = fixture.flashes
+    ? convertFixtureStateWithFlashes(fixture.initialState, fixture.flashes)
     : undefined;
 
   return (
@@ -73,10 +72,13 @@ export function VisualizerWrapper({
           </Code>
         </div>
 
-        {duringState && (
+        {duringDecorations && (
           <div className="visualizer-state">
             <h3 className="visualizer-state-title">During</h3>
-            <Code languageId={fixture.languageId} fixtureState={duringState}>
+            <Code
+              languageId={fixture.languageId}
+              decorations={duringDecorations}
+            >
               {code}
             </Code>
           </div>

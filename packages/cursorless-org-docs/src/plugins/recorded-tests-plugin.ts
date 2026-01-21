@@ -37,7 +37,7 @@ function loadRecordedTests(): RecordedTests {
 
   // Only load tests from the visualized directory
   const visualizedTests = getRecordedTestPaths().filter((test) =>
-    test.path.includes(path.sep + "visualized" + path.sep)
+    test.path.includes(path.sep + "visualized" + path.sep),
   );
 
   for (const test of visualizedTests) {
@@ -68,10 +68,10 @@ function loadRecordedTests(): RecordedTests {
         continue;
       }
 
-      // Transform ide.flashes to decorations format for visualization
-      let decorations: TestCaseFixture["decorations"] = undefined;
+      // Transform ide.flashes to decorations format for DURING state visualization
+      let flashes: TestCaseFixture["flashes"] = undefined;
       if (data.ide?.flashes) {
-        decorations = data.ide.flashes.map((flash: any) => {
+        flashes = data.ide.flashes.map((flash: any) => {
           const range = flash.range;
           // Handle both character and line range types
           let start: { line: number; character: number };
@@ -88,15 +88,12 @@ function loadRecordedTests(): RecordedTests {
           }
 
           return {
-            name: flash.style,
+            style: flash.style,
             type: range.type || "character",
             start,
             end,
           };
         });
-      } else if (data.decorations) {
-        // Fallback to old decorations format if present
-        decorations = data.decorations;
       }
 
       const fixture: TestCaseFixture = {
@@ -108,8 +105,18 @@ function loadRecordedTests(): RecordedTests {
           : undefined,
         initialState: data.initialState,
         finalState: data.finalState,
-        decorations,
+        flashes,
       };
+
+      // Debug: Log fixtures with flashes to verify DURING state data
+      if (flashes && flashes.length > 0) {
+        console.log(
+          `[DEBUG] Fixture with ${flashes.length} flashes:`,
+          test.path.split("/").pop(),
+        );
+        console.log(`  Command: ${fixture.command?.spokenForm || "none"}`);
+        console.log(`  Flash styles:`, flashes.map((f) => f.style).join(", "));
+      }
 
       fixtures.push(fixture);
 
@@ -125,14 +132,20 @@ function loadRecordedTests(): RecordedTests {
 
   const languageIds = Object.keys(fixturesByLanguage).sort();
 
+  // Count fixtures with DURING state data
+  const fixturesWithFlashes = fixtures.filter((f) => f.flashes && f.flashes.length > 0);
+
   console.log(
     `Loaded ${fixtures.length} recorded test fixtures from visualized/ directory for ${languageIds.length} languages`,
   );
+  console.log(`  Fixtures with DURING state (flashes): ${fixturesWithFlashes.length}`);
   if (errorCount > 0) {
     console.warn(`Skipped ${errorCount} fixtures due to errors`);
   }
   languageIds.forEach((lang) => {
-    console.log(`  ${lang}: ${fixturesByLanguage[lang].length} fixtures`);
+    const langFixtures = fixturesByLanguage[lang];
+    const withFlashes = langFixtures.filter((f) => f.flashes && f.flashes.length > 0).length;
+    console.log(`  ${lang}: ${langFixtures.length} fixtures (${withFlashes} with DURING state)`);
   });
 
   return { fixtures, fixturesByLanguage, languageIds };

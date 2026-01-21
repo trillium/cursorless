@@ -10,7 +10,10 @@ export type SelectionType =
   | "selection"
   | "decoration"
   | "thatMark"
-  | "sourceMark";
+  | "sourceMark"
+  | "referenced"
+  | "pendingModification0"
+  | "pendingModification1";
 export type FacetValue = ScopeSupportFacet | PlaintextScopeSupportFacet;
 
 export interface ScopeTests {

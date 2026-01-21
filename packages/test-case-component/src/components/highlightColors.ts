@@ -45,4 +45,22 @@ export const highlightColors = {
     borderSolid: "#ffa500",
     borderPorous: "#ffa50050",
   },
+
+  // Flash/highlight styles from ide.flashes (DURING state)
+  // These match the pendingModification and referenced styles from Cursorless
+  referenced: {
+    background: "#00ffd525", // Semi-transparent cyan (similar to iteration)
+    borderSolid: "#00ffd578",
+    borderPorous: "#00ffd525",
+  },
+  pendingModification0: {
+    background: "#ffff0040", // Semi-transparent yellow (target/destination)
+    borderSolid: "#ffff00",
+    borderPorous: "#ffff0060",
+  },
+  pendingModification1: {
+    background: "#ff00ff40", // Semi-transparent magenta (alternative target)
+    borderSolid: "#ff00ff",
+    borderPorous: "#ff00ff60",
+  },
 };

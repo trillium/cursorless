@@ -16,13 +16,13 @@ This guide explains how to add new properties to Cursorless recorded test fixtur
 
 ```typescript
 export interface TestCaseSnapshot {
-  documentContents: string;           // ✅ Always captured
+  documentContents: string; // ✅ Always captured
   selections: SelectionPlainObject[]; // ✅ Always captured (anchor/active positions)
-  clipboard?: string;                 // ✅ Captured for clipboard actions
+  clipboard?: string; // ✅ Captured for clipboard actions
   visibleRanges?: RangePlainObject[]; // ⚠️ Captured but NOT asserted (see issue #160)
-  marks?: SerializedMarks;            // ✅ Hat positions (e.g., default.w)
-  timeOffsetSeconds?: number;         // ✅ Opt-in via extraSnapshotFields (only example in codebase)
-  metadata?: unknown;                 // ✅ Custom data (rarely used)
+  marks?: SerializedMarks; // ✅ Hat positions (e.g., default.w)
+  timeOffsetSeconds?: number; // ✅ Opt-in via extraSnapshotFields (only example in codebase)
+  metadata?: unknown; // ✅ Custom data (rarely used)
 
   // Dynamic mark fields (e.g., thatMark, sourceMark)
   [K in `${StoredTargetKey}Mark`]?: TargetPlainObject[];
@@ -34,6 +34,7 @@ export interface TestCaseSnapshot {
 Based on actual `config.json` files in the repo:
 
 **`data/fixtures/recorded/decorations/config.json`**:
+
 ```json
 {
   "isDecorationsTest": true
@@ -41,6 +42,7 @@ Based on actual `config.json` files in the repo:
 ```
 
 **`data/fixtures/recorded/hatTokenMap/config.json`**:
+
 ```json
 {
   "isHatTokenMapTest": true
@@ -48,6 +50,7 @@ Based on actual `config.json` files in the repo:
 ```
 
 **`data/fixtures/recorded/actions/config.json`**:
+
 ```json
 {
   "captureFinalThatMark": true
@@ -69,33 +72,33 @@ command:
       type: primitive
       modifiers:
         - type: containingScope
-          scopeType: {type: line}
+          scopeType: { type: line }
     destination:
       type: primitive
       insertionMode: before
       target:
         type: primitive
-        mark: {type: decoratedSymbol, symbolColor: default, character: w}
+        mark: { type: decoratedSymbol, symbolColor: default, character: w }
   usePrePhraseSnapshot: true
 initialState:
   documentContents: |-
     hello world
     whatever now
   selections:
-    - anchor: {line: 1, character: 12}
-      active: {line: 1, character: 12}
+    - anchor: { line: 1, character: 12 }
+      active: { line: 1, character: 12 }
   marks:
     default.w:
-      start: {line: 0, character: 6}
-      end: {line: 0, character: 11}
+      start: { line: 0, character: 6 }
+      end: { line: 0, character: 11 }
 finalState:
   documentContents: |-
     whatever now
     hello world
     whatever now
   selections:
-    - anchor: {line: 2, character: 12}
-      active: {line: 2, character: 12}
+    - anchor: { line: 2, character: 12 }
+      active: { line: 2, character: 12 }
 ```
 
 ---
@@ -178,6 +181,7 @@ export interface TestCaseSnapshot extends MarkKeys {
 ```
 
 **Tips**:
+
 - Use optional (`?`) for properties that aren't always present
 - Ensure the type is JSON-serializable (primitives, arrays, plain objects)
 - Import types from `@cursorless/common` if needed
@@ -231,6 +235,7 @@ export async function takeSnapshot(
 ```
 
 **Important**:
+
 - Respect `excludeFields` to allow conditional capture
 - Use `editor` for document/selection data
 - Use `ide` for IDE-level data (clipboard, decorations, etc.)
@@ -277,6 +282,7 @@ private getExcludedFields(isInitialSnapshot: boolean) {
 ```
 
 **When to use exclusion logic**:
+
 - Property is expensive to capture (e.g., large data structures)
 - Property is only relevant for specific actions
 - Property would add noise to most test fixtures
@@ -292,24 +298,27 @@ For properties that should be opt-in (like `timeOffsetSeconds`), use `extraSnaps
 **Implementation**:
 
 1. The type is already defined in `TestCaseSnapshot.ts`:
+
    ```typescript
    export type ExtraSnapshotField = keyof TestCaseSnapshot;
    ```
 
 2. `TestCaseRecorder` reads it from config (line 213, 228):
+
    ```typescript
-   extraSnapshotFields = [],  // default value
-   this.extraSnapshotFields = extraSnapshotFields;  // stored
+   ((extraSnapshotFields = []), // default value
+     (this.extraSnapshotFields = extraSnapshotFields)); // stored
    ```
 
 3. It's passed to `takeSnapshot()` (line 151):
    ```typescript
-   this.active ? this.extraSnapshotFields : undefined
+   this.active ? this.extraSnapshotFields : undefined;
    ```
 
 **To use it for your property**:
 
 **Check for inclusion in `takeSnapshot()`**:
+
 ```typescript
 if (extraFields.includes("myNewProperty")) {
   snapshot.myNewProperty = getMyNewProperty(editor, ide);
@@ -327,11 +336,14 @@ Create or edit `data/fixtures/recorded/{directory}/config.json`:
 ```
 
 **Working Example**: The `timeOffsetSeconds` property (`takeSnapshot.ts:57-68`):
+
 ```typescript
 if (extraFields.includes("timeOffsetSeconds")) {
   const startTimestamp = extraContext?.startTimestamp;
   if (startTimestamp == null) {
-    throw new Error("No start timestamp provided but time offset was requested");
+    throw new Error(
+      "No start timestamp provided but time offset was requested",
+    );
   }
   const offsetNanoseconds = process.hrtime.bigint() - startTimestamp;
   snapshot.timeOffsetSeconds = hrtimeBigintToSeconds(offsetNanoseconds);
@@ -352,12 +364,13 @@ if (expectedFinalState.myNewProperty !== undefined) {
   assert.deepStrictEqual(
     actualFinalState.myNewProperty,
     expectedFinalState.myNewProperty,
-    "myNewProperty mismatch"
+    "myNewProperty mismatch",
   );
 }
 ```
 
 **Important**:
+
 - Handle undefined/null values gracefully
 - Use appropriate comparison (deep equal for objects/arrays)
 - Provide clear error messages for test failures
@@ -386,6 +399,7 @@ pnpm transform-recorded-tests --custom path/to/transform.ts
 **Option C: Manual Re-recording**
 
 Re-record specific tests by:
+
 1. Delete the old fixture file
 2. Say "cursorless record"
 3. Re-execute the voice command
@@ -399,13 +413,13 @@ Re-record specific tests by:
 
 Different recording commands capture different properties:
 
-| Command | Extra Properties |
-|---------|------------------|
-| `cursorless record` | Standard (selections, marks, documentContents) |
-| `cursorless record highlights` | `decorations` (flash highlights) |
-| `cursorless record error` | `errors` (expected errors) |
-| `cursorless record that mark` | `thatMark` (that mark behavior) |
-| `cursorless record navigation` | Full navigation map (all hats) |
+| Command                        | Extra Properties                               |
+| ------------------------------ | ---------------------------------------------- |
+| `cursorless record`            | Standard (selections, marks, documentContents) |
+| `cursorless record highlights` | `decorations` (flash highlights)               |
+| `cursorless record error`      | `errors` (expected errors)                     |
+| `cursorless record that mark`  | `thatMark` (that mark behavior)                |
+| `cursorless record navigation` | Full navigation map (all hats)                 |
 
 ### Config File Options
 
@@ -424,6 +438,7 @@ Different recording commands capture different properties:
 ```
 
 **Options**:
+
 - `isHatTokenMapTest` - Capture full hat map for navigation tests
 - `isDecorationsTest` - Record decoration/highlight states
 - `isSilent` - Suppress recording notifications
@@ -467,9 +482,8 @@ export interface TestCaseSnapshot extends MarkKeys {
 **File**: `packages/test-case-recorder/src/takeSnapshot.ts`
 
 ```typescript
-export async function takeSnapshot(
-  // ... parameters
-) {
+export async function takeSnapshot() {
+// ... parameters
   const snapshot: TestCaseSnapshot = {
     documentContents: editor.document.getText(),
     selections: editor.selections.map(selectionToPlainObject),
@@ -477,7 +491,7 @@ export async function takeSnapshot(
 
   // Add capture logic
   if (!excludeFields.includes("selectionMetadata")) {
-    snapshot.selectionMetadata = editor.selections.map(sel => {
+    snapshot.selectionMetadata = editor.selections.map((sel) => {
       const anchorOffset = editor.document.offsetAt(sel.anchor);
       const activeOffset = editor.document.offsetAt(sel.active);
       return {
@@ -510,7 +524,7 @@ if (expectedFinalState.selectionMetadata !== undefined) {
   assert.deepStrictEqual(
     actualFinalState.selectionMetadata,
     expectedFinalState.selectionMetadata,
-    "Selection metadata mismatch"
+    "Selection metadata mismatch",
   );
 }
 ```
@@ -529,8 +543,8 @@ Result: `data/fixtures/recorded/selections/takeAir.yml` now includes:
 ```yaml
 finalState:
   selections:
-    - anchor: {line: 0, character: 0}
-      active: {line: 0, character: 5}
+    - anchor: { line: 0, character: 0 }
+      active: { line: 0, character: 5 }
   selectionMetadata:
     - direction: forward
       length: 5
@@ -583,6 +597,7 @@ CURSORLESS_TEST_UPDATE_FIXTURES=true pnpm test
 **Problem**: Your type contains functions, circular references, or other non-JSON data.
 
 **Solution**: Convert to plain objects using serialization helpers:
+
 - `rangeToPlainObject()`
 - `selectionToPlainObject()`
 - `marksToPlainObject()`
@@ -604,6 +619,7 @@ CURSORLESS_TEST_UPDATE_FIXTURES=true pnpm test
 **Problem**: Adding a required (non-optional) field breaks all existing fixtures.
 
 **Solution**:
+
 - Always make new fields optional (`?`)
 - Use update mode to regenerate existing fixtures
 - Or use `extraSnapshotFields` to make it opt-in
@@ -684,22 +700,22 @@ Based on code inspection (as of this writing):
 
 These mechanisms are **actively used** and **verified** by existing config files:
 
-| Mechanism | Config File | Property Tracked |
-|-----------|-------------|------------------|
-| `isDecorationsTest` | `decorations/config.json` | Decoration states |
-| `isHatTokenMapTest` | `hatTokenMap/config.json` | Full hat token map |
-| `captureFinalThatMark` | `actions/config.json` | That mark in final state |
+| Mechanism              | Config File               | Property Tracked         |
+| ---------------------- | ------------------------- | ------------------------ |
+| `isDecorationsTest`    | `decorations/config.json` | Decoration states        |
+| `isHatTokenMapTest`    | `hatTokenMap/config.json` | Full hat token map       |
+| `captureFinalThatMark` | `actions/config.json`     | That mark in final state |
 
 ### ✅ Implemented but Unused
 
 These mechanisms are **fully implemented** in code but **not currently used** in any config files:
 
-| Mechanism | Implementation | Notes |
-|-----------|----------------|-------|
-| `extraSnapshotFields` | `takeSnapshot.ts:57-68`, `TestCaseRecorder.ts:213,228` | Works for `timeOffsetSeconds`, ready for new properties |
-| `showCalibrationDisplay` | `TestCaseRecorder.ts:214,241-268` | Timing calibration for video recording |
-| `recordErrors` (aka `isErrorTest`) | `TestCaseRecorder.ts:215,452-458` | Capture expected errors |
-| `isSilent` | `TestCaseRecorder.ts:212,363` | Suppress recording notifications |
+| Mechanism                          | Implementation                                         | Notes                                                   |
+| ---------------------------------- | ------------------------------------------------------ | ------------------------------------------------------- |
+| `extraSnapshotFields`              | `takeSnapshot.ts:57-68`, `TestCaseRecorder.ts:213,228` | Works for `timeOffsetSeconds`, ready for new properties |
+| `showCalibrationDisplay`           | `TestCaseRecorder.ts:214,241-268`                      | Timing calibration for video recording                  |
+| `recordErrors` (aka `isErrorTest`) | `TestCaseRecorder.ts:215,452-458`                      | Capture expected errors                                 |
+| `isSilent`                         | `TestCaseRecorder.ts:212,363`                          | Suppress recording notifications                        |
 
 ### Properties Without Config Support
 
@@ -714,6 +730,7 @@ These properties are **always captured** (no config needed):
 ### Config File Locations
 
 Only **3 config files** exist in the entire repo:
+
 1. `data/fixtures/recorded/decorations/config.json`
 2. `data/fixtures/recorded/hatTokenMap/config.json`
 3. `data/fixtures/recorded/actions/config.json`
@@ -725,6 +742,7 @@ All other test directories use default settings.
 ## Questions?
 
 If you're unsure about:
+
 - **What property to add**: Check existing `TestCaseSnapshot` fields for patterns
 - **Where to capture data**: Look at `takeSnapshot()` implementation
 - **How to serialize**: Use helpers from `@cursorless/common/util/toPlainObject`

@@ -19,6 +19,7 @@ This captures **all available data** in recorded fixtures.
 ## What This Captures
 
 ### ✅ Always Captured (No Config Needed)
+
 - `documentContents` - Full document text before/after
 - `selections` - Cursor positions (anchor/active)
 - `marks` - Hat positions referenced in command
@@ -28,6 +29,7 @@ This captures **all available data** in recorded fixtures.
 - `visibleRanges` - Scroll position (captured but not asserted)
 
 ### ✅ Enabled by Config
+
 - `ide.flashes` - Flash decorations (e.g., deletion highlights)
 - `ide.highlights` - Highlight decorations by ID
 - `ide.messages` - User notifications
@@ -36,6 +38,7 @@ This captures **all available data** in recorded fixtures.
 - `timeOffsetSeconds` - Timing data (both states)
 
 ### ✅ Conditionally Captured (Action-Dependent)
+
 - `clipboard` - For copy/paste actions
 - `thatMark`, `sourceMark`, `instanceReferenceMark`, `keyboardMark` - Stored targets
 
@@ -44,6 +47,7 @@ This captures **all available data** in recorded fixtures.
 ## How to Use
 
 ### Record a Test
+
 ```
 1. Say: "cursorless record"
 2. Pick: Any directory
@@ -52,6 +56,7 @@ This captures **all available data** in recorded fixtures.
 ```
 
 ### Verify Capture
+
 ```bash
 # Check generated file
 code data/fixtures/recorded/{directory}/{testName}.yml
@@ -67,35 +72,36 @@ code data/fixtures/recorded/{directory}/{testName}.yml
 ## What You Get
 
 ### Example Fixture with All Data
+
 ```yaml
 languageId: typescript
 command:
   version: 6
   spokenForm: take air
-  action: {...}
+  action: { ... }
 initialState:
   documentContents: "hello world"
   selections:
-    - anchor: {line: 0, character: 0}
-      active: {line: 0, character: 5}
+    - anchor: { line: 0, character: 0 }
+      active: { line: 0, character: 5 }
   marks:
-    default.a: {...}
-  visibleRanges: [{...}]
+    default.a: { ... }
+  visibleRanges: [{ ... }]
   timeOffsetSeconds: 0.0
 finalState:
   documentContents: "world"
-  selections: [{...}]
-  thatMark: [{...}]
-  sourceMark: [{...}]
+  selections: [{ ... }]
+  thatMark: [{ ... }]
+  sourceMark: [{ ... }]
   timeOffsetSeconds: 0.085
 ide:
   messages: []
   flashes:
     - style: justAdded
-      range: {...}
+      range: { ... }
   highlights:
     - highlightId: pendingModification
-      ranges: [{...}]
+      ranges: [{ ... }]
 returnValue: null
 ```
 
@@ -104,11 +110,13 @@ returnValue: null
 ## Common Issues
 
 ### Config Not Working
+
 - ✅ Check JSON syntax: `cat data/fixtures/recorded/config.json | jq`
 - ✅ Restart VSCode extension after config changes
 - ✅ Verify recording in correct directory
 
 ### Missing Properties
+
 - `ide` field missing → Check `isDecorationsTest: true`
 - `thatMark` missing → Check `captureFinalThatMark: true`
 - `timeOffsetSeconds` missing → Check `extraSnapshotFields`
@@ -172,6 +180,7 @@ Or modify to only capture what you need:
 Capturing everything adds minimal overhead (~10-20ms per command).
 
 If recording many tests, consider:
+
 - Disabling `timeOffsetSeconds` (least useful)
 - Disabling `isDecorationsTest` (if not testing UI)
 - Keeping `captureFinalThatMark` (useful for debugging)

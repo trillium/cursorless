@@ -16,7 +16,7 @@ Updated `packages/cursorless-org-docs/src/plugins/recorded-tests-plugin.ts` to:
 ```typescript
 // Only load tests from the visualized directory
 const visualizedTests = getRecordedTestPaths().filter((test) =>
-  test.path.includes(path.sep + "visualized" + path.sep)
+  test.path.includes(path.sep + "visualized" + path.sep),
 );
 ```
 
@@ -25,6 +25,7 @@ const visualizedTests = getRecordedTestPaths().filter((test) =>
 **After**: Only loads fixtures from `data/fixtures/recorded/visualized/` directory
 
 **Current files** (3 total):
+
 - `bringAirAndBatAndCap.yml`
 - `bringAirAndBatAndCap2.yml`
 - `bringEachAndFineAndGust.yml`
@@ -51,37 +52,39 @@ if (data.ide?.flashes) {
 ```
 
 **New format** (from fixtures with `isDecorationsTest: true`):
+
 ```yaml
 ide:
   flashes:
     - style: referenced
       range:
         type: character
-        start: {line: 0, character: 0}
-        end: {line: 0, character: 1}
+        start: { line: 0, character: 0 }
+        end: { line: 0, character: 1 }
     - style: pendingModification0
       range:
         type: character
-        start: {line: 2, character: 0}
-        end: {line: 2, character: 5}
+        start: { line: 2, character: 0 }
+        end: { line: 2, character: 5 }
 ```
 
 **Old format** (expected by VisualizerWrapper):
+
 ```typescript
 decorations: [
   {
     name: "referenced",
     type: "character",
     start: { line: 0, character: 0 },
-    end: { line: 0, character: 1 }
+    end: { line: 0, character: 1 },
   },
   {
     name: "pendingModification0",
     type: "character",
     start: { line: 2, character: 0 },
-    end: { line: 2, character: 5 }
-  }
-]
+    end: { line: 2, character: 5 },
+  },
+];
 ```
 
 ---
@@ -91,6 +94,7 @@ decorations: [
 ### Problem 1: Too Many Fixtures
 
 Loading all 3,286+ test fixtures was:
+
 - Slow to build
 - Large bundle size
 - Unnecessary for visualization purposes
@@ -140,15 +144,16 @@ The `decorations` field is used to create the "DURING" state showing:
 
 ### Fixtures in visualized/
 
-| File | Command | Highlights Captured |
-|------|---------|-------------------|
-| `bringAirAndBatAndCap.yml` | "bring air and bat and cap" | ❌ No (recorded before config) |
-| `bringAirAndBatAndCap2.yml` | Unknown | Unknown |
-| `bringEachAndFineAndGust.yml` | "bring each and fine and gust" | ✅ Yes (5 flashes) |
+| File                          | Command                        | Highlights Captured            |
+| ----------------------------- | ------------------------------ | ------------------------------ |
+| `bringAirAndBatAndCap.yml`    | "bring air and bat and cap"    | ❌ No (recorded before config) |
+| `bringAirAndBatAndCap2.yml`   | Unknown                        | Unknown                        |
+| `bringEachAndFineAndGust.yml` | "bring each and fine and gust" | ✅ Yes (5 flashes)             |
 
 ### Config Status
 
 **Active config**: `data/fixtures/recorded/config.json`
+
 ```json
 {
   "isDecorationsTest": true,
@@ -189,6 +194,7 @@ console.log(fixturesByLanguage.plaintext[2].decorations);
 ### Recording New Tests
 
 1. **Record in visualized directory**:
+
    ```
    Voice: "cursorless record"
    Pick: "visualized" directory
@@ -197,6 +203,7 @@ console.log(fixturesByLanguage.plaintext[2].decorations);
    ```
 
 2. **Verify highlights captured**:
+
    ```bash
    cat data/fixtures/recorded/visualized/<your-test>.yml | grep -A 20 "ide:"
    ```
@@ -212,11 +219,11 @@ languageId: plaintext
 command:
   version: 7
   spokenForm: your command here
-  action: {...}
+  action: { ... }
 initialState:
   documentContents: "..."
   selections: [...]
-  marks: {...}
+  marks: { ... }
 finalState:
   documentContents: "..."
   selections: [...]
@@ -225,8 +232,8 @@ ide:
     - style: referenced
       range:
         type: character
-        start: {line: 0, character: 0}
-        end: {line: 0, character: 5}
+        start: { line: 0, character: 0 }
+        end: { line: 0, character: 5 }
 ```
 
 ---
@@ -238,6 +245,7 @@ ide:
 **Symptoms**: "DURING" state doesn't appear in visualization
 
 **Check**:
+
 1. Fixture has `ide.flashes` field: `grep -A 10 "ide:" <file>.yml`
 2. Plugin transformation is working: Check browser console for errors
 3. VisualizerWrapper is receiving decorations: Use React DevTools
@@ -247,6 +255,7 @@ ide:
 **Symptoms**: Seeing tests from other directories
 
 **Check**:
+
 1. Filter logic is correct: `test.path.includes(path.sep + "visualized" + path.sep)`
 2. File is actually in visualized/: `ls data/fixtures/recorded/visualized/`
 
@@ -255,6 +264,7 @@ ide:
 **Symptoms**: No fixtures available on website
 
 **Check**:
+
 1. Plugin is registered in Docusaurus config
 2. Build logs show fixture loading: "Loaded X recorded test fixtures..."
 3. No YAML parsing errors in console

@@ -261,3 +261,100 @@ function getCodeLineRanges(code: string): Range[] {
 function getLineRanges(lineRanges: Range[], range: Range): Range[] {
   return lineRanges.slice(range.start.line, range.end.line + 1);
 }
+
+/**
+ * Converts flash decorations (from ide.flashes) to Shiki decorations
+ * This is used for the DURING state visualization
+ */
+export function convertFlashesToDecorations(
+  flashes: Array<{
+    style: string;
+    type: string;
+    start: { line: number; character: number };
+    end: { line: number; character: number };
+  }>,
+  code: string,
+): DecorationItem[] {
+  const highlights: Highlight[] = [];
+
+  for (const flash of flashes) {
+    // Get colors based on flash style
+    const colors =
+      highlightColors[flash.style as SelectionType] ||
+      highlightColors.decoration; // fallback
+
+    const range = new Range(
+      new Position(flash.start.line, flash.start.character),
+      new Position(flash.end.line, flash.end.character),
+    );
+    const codeLineRanges = getCodeLineRanges(code);
+    const decorations = getDecorations(codeLineRanges, [range]);
+
+    for (const decoration of decorations) {
+      highlights.push(getHighlight(colors, decoration.range, decoration.style));
+    }
+  }
+
+  // Flatten overlapping highlights
+  const flattenedHighlights = flattenHighlights(highlights);
+
+  // Convert to Shiki decorations
+  return highlightsToDecorations(flattenedHighlights);
+}
+
+/**
+ * Combines a fixture state with flash decorations for DURING state
+ * This creates a merged visualization showing both the initial state AND the flashes
+ */
+export function convertFixtureStateWithFlashes(
+  state: CursorlessFixtureState,
+  flashes: Array<{
+    style: string;
+    type: string;
+    start: { line: number; character: number };
+    end: { line: number; character: number };
+  }>,
+): DecorationItem[] {
+  const code = state.documentContents;
+
+  // Convert initial state to highlights
+  const stateHighlights = convertFixtureStateToHighlights(state, code);
+
+  // Convert flashes to highlights
+  const flashHighlights: Highlight[] = [];
+  for (const flash of flashes) {
+    const colors =
+      highlightColors[flash.style as SelectionType] ||
+      highlightColors.decoration;
+
+    const range = new Range(
+      new Position(flash.start.line, flash.start.character),
+      new Position(flash.end.line, flash.end.character),
+    );
+    const codeLineRanges = getCodeLineRanges(code);
+    const decorations = getDecorations(codeLineRanges, [range]);
+
+    for (const decoration of decorations) {
+      flashHighlights.push(
+        getHighlight(colors, decoration.range, decoration.style),
+      );
+    }
+  }
+
+  // Combine all highlights
+  const allHighlights = [...stateHighlights, ...flashHighlights];
+
+  // Flatten overlapping highlights
+  const flattenedHighlights = flattenHighlights(allHighlights);
+
+  // Convert to Shiki decorations
+  const shikiDecorations = highlightsToDecorations(flattenedHighlights);
+
+  // Add hat decorations (these don't overlap with highlights)
+  if (state.marks) {
+    const hatDecorations = convertHatMarksToDecorations(state.marks, code);
+    shikiDecorations.push(...hatDecorations);
+  }
+
+  return shikiDecorations;
+}
