@@ -1,7 +1,13 @@
-import { getHighlighter, createCssVariablesTheme } from "shiki";
+import {
+  getHighlighter,
+  createCssVariablesTheme,
+  type BundledLanguage,
+} from "shiki";
 
 import type { HatType, SelectionType, Token } from "./renderToHtml";
 import { renderToHtml } from "./renderToHtml";
+
+type Lang = BundledLanguage;
 
 export interface SelectionAnchor {
   line: number;
@@ -198,16 +204,19 @@ class SelectionParser {
   }
 
   parse(selection: CursorlessFixtureSelection) {
-    let start, end;
-    if (selection.type === "UntypedTarget") {
-      start = selection.contentRange.start.line;
-      end = selection.contentRange.end.line;
-    } else {
-      start = selection.anchor.line;
-      end = selection.active.line;
+    const start = selection.anchor;
+    const end = selection.active;
+
+    if (!start || !end) {
+      console.error("Invalid selection:", selection);
+      return;
     }
-    for (let l = end.line; l <= start.line; l += 1) {
-      if (l !== end.line && l !== start.line) {
+
+    const startLine = Math.min(start.line, end.line);
+    const endLine = Math.max(start.line, end.line);
+
+    for (let l = startLine; l <= endLine; l += 1) {
+      if (l !== startLine && l !== endLine) {
         this.handleInsideLine(l);
         continue;
       }

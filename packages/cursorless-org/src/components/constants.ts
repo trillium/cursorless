@@ -1,5 +1,4 @@
-import { CURSORLESS_ORG_URL } from "@cursorless/common";
-
+export const CURSORLESS_ORG_URL = "https://www.cursorless.org";
 export const DESCRIPTION = "Voice coding at the speed of thought";
 export const TITLE = `Cursorless: ${DESCRIPTION}`;
 export const VIDEO_SHARE_THUMBNAIL_URL = `${CURSORLESS_ORG_URL}/video-share-thumbnail.jpg`;
