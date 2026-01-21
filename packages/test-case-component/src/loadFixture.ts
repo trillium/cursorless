@@ -1,16 +1,6 @@
-import { generateHtml, SelectionAnchor } from "./generateHtml";
+import type { SelectionAnchor } from "./generateHtml";
+import { generateHtml } from "./generateHtml";
 
-<<<<<<< HEAD
-const fixturesDir = path.join(
-  "../",
-  "../",
-  "data",
-  "fixtures",
-  "recorded",
-);
-
-=======
->>>>>>> 30c4fc94d (feat: Remove fs parts of loadFixture)
 async function safeGenerateHtml(
   ...args: [stateName: string, ...rest: Parameters<typeof generateHtml>]
 ) {
@@ -24,10 +14,8 @@ async function safeGenerateHtml(
   }
 }
 
-export async function loadFixture(
-  data: any
-) {
-  console.log("loadFixture", data)
+export async function loadFixture(data: any) {
+  console.log("loadFixture", data);
   try {
     const during = data.decorations
       ? await safeGenerateHtml(

@@ -6,6 +6,11 @@ import type {
 } from "@cursorless/common";
 
 export type RangeType = "content" | "removal";
+export type SelectionType =
+  | "selection"
+  | "decoration"
+  | "thatMark"
+  | "sourceMark";
 export type FacetValue = ScopeSupportFacet | PlaintextScopeSupportFacet;
 
 export interface ScopeTests {

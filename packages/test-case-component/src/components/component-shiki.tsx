@@ -1,7 +1,6 @@
 import * as React from "react";
 
 export const ShikiComponent: React.FC<{ data: any }> = ({ data }) => {
-
   return (
     <div className="px-4">
       <div className="p-8">

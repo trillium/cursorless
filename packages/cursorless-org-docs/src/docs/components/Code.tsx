@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { codeToHtml, type DecorationItem } from "shiki";
 import "./Code.css";
+import "./hatDecorations.css";
+import {
+  convertFixtureStateToDecorations,
+  type CursorlessFixtureState,
+} from "./fixtureAdapter";
 
 interface Props {
   languageId: string;
   renderWhitespace?: boolean;
   decorations?: DecorationItem[];
+
+  // New: Support for fixture state from .yml files
+  fixtureState?: CursorlessFixtureState;
+
   link?: {
     name: string;
     url: string;
@@ -17,6 +26,7 @@ export function Code({
   languageId,
   renderWhitespace,
   decorations,
+  fixtureState,
   link,
   children,
 }: Props) {
@@ -24,13 +34,18 @@ export function Code({
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    // If fixtureState is provided, convert it to decorations
+    const effectiveDecorations = fixtureState
+      ? convertFixtureStateToDecorations(fixtureState)
+      : decorations;
+
     const code = renderWhitespace
       ? children.replaceAll(" ", "␣").replaceAll("\t", "⭾")
       : children;
     codeToHtml(code, {
       lang: getFallbackLanguage(languageId),
       theme: "nord",
-      decorations,
+      decorations: effectiveDecorations,
     })
       .then((html) => {
         if (renderWhitespace) {
@@ -41,7 +56,7 @@ export function Code({
         setHtml(html);
       })
       .catch(console.error);
-  }, [languageId, renderWhitespace, decorations, link, children]);
+  }, [languageId, renderWhitespace, decorations, fixtureState, link, children]);
 
   if (!html) {
     return <div className="code-container" />;

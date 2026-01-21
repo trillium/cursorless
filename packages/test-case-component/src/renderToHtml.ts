@@ -1,14 +1,15 @@
-  // forked from https://github.com/SimeonC/shiki/blob/main/packages/shiki/src/renderer.ts
+// forked from https://github.com/SimeonC/shiki/blob/main/packages/shiki/src/renderer.ts
 
-import { ThemedToken } from "shiki";
+import type { ThemedToken } from "shiki";
 
 // MIT License
+
 const FontStyle = {
-  NotSet: -1,
-  None: 0,
-  Italic: 1,
-  Bold: 2,
-  Underline: 4,
+  notSet: -1,
+  none: 0,
+  italic: 1,
+  bold: 2,
+  underline: 4,
 } as const;
 
 export function groupBy<TObject>(
@@ -125,13 +126,13 @@ export function renderToHtml(
     }
 
     const cssDeclarations = [`color: ${token.color || options.fg}`];
-    if (token.fontStyle && FontStyle.Italic) {
+    if (token.fontStyle && FontStyle.italic) {
       cssDeclarations.push("font-style: italic");
     }
-    if (token.fontStyle && FontStyle.Bold) {
+    if (token.fontStyle && FontStyle.bold) {
       cssDeclarations.push("font-weight: bold");
     }
-    if (token.fontStyle && FontStyle.Underline) {
+    if (token.fontStyle && FontStyle.underline) {
       cssDeclarations.push("text-decoration: underline");
     }
 
@@ -144,10 +145,8 @@ export function renderToHtml(
     );
   }
 
-  return h(
-    "pre",
-    { className: "shiki", style: `background-color: ${bg}` },
-    [ options.langId ? `<div class="language-id">${options.langId}</div>` : "",
+  return h("pre", { className: "shiki", style: `background-color: ${bg}` }, [
+    options.langId ? `<div class="language-id">${options.langId}</div>` : "",
     h(
       "code",
       {},
@@ -166,23 +165,34 @@ export function renderToHtml(
         );
       }),
     ),
-  ]
-);
+  ]);
 }
 
 const htmlEscapes = {
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  '"': "&quot;",
-  "'": "&#39;",
+  amp: "&amp;",
+  lt: "&lt;",
+  gt: "&gt;",
+  quot: "&quot;",
+  apos: "&#39;",
 } as const;
 
 function escapeHtml(html: string) {
-  return (html || "").replace(
-    /[&<>"']/g,
-    (chr) => htmlEscapes[chr as keyof typeof htmlEscapes],
-  );
+  return (html || "").replace(/[&<>"']/g, (chr) => {
+    switch (chr) {
+      case "&":
+        return htmlEscapes.amp;
+      case "<":
+        return htmlEscapes.lt;
+      case ">":
+        return htmlEscapes.gt;
+      case '"':
+        return htmlEscapes.quot;
+      case "'":
+        return htmlEscapes.apos;
+      default:
+        return chr;
+    }
+  });
 }
 
 function getLineClasses(lineOptions: { classes?: string }[]) {
