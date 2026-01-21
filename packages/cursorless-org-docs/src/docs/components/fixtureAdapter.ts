@@ -273,35 +273,13 @@ export function convertFixtureStateWithFlashes(
   }>,
 ): DecorationItem[] {
   const code = state.documentContents;
-  const lines = code.split("\n");
 
-  // Convert initial state to highlights
-  const stateHighlights = convertFixtureStateToHighlights(state, code);
+  // Don't show initial state highlights during DURING state - only show flashes
+  const stateHighlights: Highlight[] = [];
 
-  // Convert flashes to highlights, filtering out invalid positions
+  // Convert flashes to highlights
   const flashHighlights: Highlight[] = [];
   for (const flash of flashes) {
-    // Validate flash positions against the code
-    const startLine = lines[flash.start.line];
-    const endLine = lines[flash.end.line];
-
-    if (!startLine || !endLine) {
-      console.warn(
-        `[DEBUG] Skipping flash with invalid line: ${flash.start.line}-${flash.end.line}`,
-      );
-      continue;
-    }
-
-    if (
-      flash.start.character > startLine.length ||
-      flash.end.character > endLine.length
-    ) {
-      console.warn(
-        `[DEBUG] Skipping flash with out-of-bounds position: line ${flash.start.line} char ${flash.start.character}-${flash.end.character}, line length: ${startLine.length}`,
-      );
-      continue;
-    }
-
     const colors =
       highlightColors[flash.style as SelectionType] ||
       highlightColors.decoration;

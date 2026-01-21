@@ -79,8 +79,9 @@ export function VisualizerWrapper({
 
   // Combine initial state with flashes for DURING state visualization
   // This shows both the marks/selections AND the flash highlights
+  // Flashes are relative to FINAL state positions
   const duringDecorations = fixture.flashes
-    ? convertFixtureStateWithFlashes(fixture.initialState, fixture.flashes)
+    ? convertFixtureStateWithFlashes(fixture.finalState, fixture.flashes)
     : undefined;
 
   // Debug: Log when DURING state is rendered
@@ -122,7 +123,7 @@ export function VisualizerWrapper({
               languageId={fixture.languageId}
               decorations={duringDecorations}
             >
-              {code}
+              {fixture.finalState.documentContents}
             </Code>
           </div>
         )}

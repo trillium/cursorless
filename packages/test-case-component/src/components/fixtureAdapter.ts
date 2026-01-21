@@ -317,8 +317,8 @@ export function convertFixtureStateWithFlashes(
 ): DecorationItem[] {
   const code = state.documentContents;
 
-  // Convert initial state to highlights
-  const stateHighlights = convertFixtureStateToHighlights(state, code);
+  // Don't show initial state highlights during DURING state - only show flashes
+  const stateHighlights: Highlight[] = [];
 
   // Convert flashes to highlights
   const flashHighlights: Highlight[] = [];
