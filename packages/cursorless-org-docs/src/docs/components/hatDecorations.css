@@ -11,32 +11,58 @@
 .hat::before {
   content: "";
   display: inline;
-  top: 0px;
   left: 50%;
   position: absolute;
   transform: translate(-50%, -25%);
   background-color: grey;
   mask-repeat: no-repeat;
-  width: 10px;
-  height: 10px;
-}
-
-/* Default hat (small circle) */
-.hat-default::before {
+  /* Default shape - small circle applied to all hats */
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 308.34 254.24"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><ellipse class="cls-1" cx="154.17" cy="127.12" rx="154.17" ry="127.12"/></g></g></svg>');
-  top: -0.4px;
+  top: -2px;
   width: 6px;
   height: 6px;
 }
 
-/* Wing hat (chevron/arrow shape) */
-.hat-wing::before {
-  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.81 234.76" ><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M371.81,234.42h0s-153.27-57.29-185.9-54.08h0C154.36,177.24,0,234.76,0,234.76H0L158.55,101.69c.6-.49-.39,1.87-.23,1.12L186.24,0h0l26.84,101.37"/></g></g></svg>');
+/* Hat Colors - matching cursorless-vscode/src/ide/vscode/hatStyles.types.ts */
+.hat-default::before {
+  background-color: #6b7280;
 }
 
-/* Additional hat type support can be added here as needed */
-/* Example for other hat types:
-.hat-ex::before {
-  mask-image: url(...);
+.hat-blue::before {
+  background-color: #3b82f6;
 }
-*/
+
+.hat-green::before {
+  background-color: #22c55e;
+}
+
+.hat-red::before {
+  background-color: #ef4444;
+}
+
+.hat-pink::before {
+  background-color: #ec4899;
+}
+
+.hat-yellow::before {
+  background-color: #eab308;
+}
+
+.hat-userColor1::before {
+  background-color: #8b5cf6;
+}
+
+.hat-userColor2::before {
+  background-color: #f97316;
+}
+
+/* Wing hat (chevron/arrow shape) - overrides default circle */
+.hat-wing::before {
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371.81 234.76" ><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M371.81,234.42h0s-153.27-57.29-185.9-54.08h0C154.36,177.24,0,234.76,0,234.76H0L158.55,101.69c.6-.49-.39,1.87-.23,1.12L186.24,0h0l26.84,101.37"/></g></g></svg>');
+  top: 0px;
+  width: 10px;
+  height: 10px;
+}
+
+/* Note: Other hat shapes (bolt, curve, fox, frame, play, hole, ex, crosshairs, eye)
+   require SVG files from cursorless-vscode/images/hats/ to be added here */
