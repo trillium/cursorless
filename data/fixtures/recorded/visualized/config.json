@@ -1,0 +1,5 @@
+{
+  "isDecorationsTest": true,
+  "captureFinalThatMark": true,
+  "extraSnapshotFields": ["timeOffsetSeconds"]
+}

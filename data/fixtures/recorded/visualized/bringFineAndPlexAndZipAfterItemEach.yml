@@ -1,0 +1,115 @@
+languageId: typescript
+command:
+  version: 7
+  spokenForm: bring fine and plex and zip after item each
+  action:
+    name: replaceWithTarget
+    source:
+      type: list
+      elements:
+        - type: primitive
+          mark: {type: decoratedSymbol, symbolColor: default, character: f}
+        - type: primitive
+          mark: {type: decoratedSymbol, symbolColor: default, character: x}
+        - type: primitive
+          mark: {type: decoratedSymbol, symbolColor: default, character: z}
+    destination:
+      type: primitive
+      insertionMode: after
+      target:
+        type: primitive
+        mark: {type: decoratedSymbol, symbolColor: default, character: e}
+        modifiers:
+          - type: containingScope
+            scopeType: {type: collectionItem}
+  usePrePhraseSnapshot: true
+initialState:
+  documentContents: |+
+    f
+    x
+    z
+
+    const values = [e]
+
+  selections:
+    - anchor: {line: 6, character: 0}
+      active: {line: 6, character: 0}
+  marks:
+    default.f:
+      start: {line: 0, character: 0}
+      end: {line: 0, character: 1}
+    default.x:
+      start: {line: 1, character: 0}
+      end: {line: 1, character: 1}
+    default.z:
+      start: {line: 2, character: 0}
+      end: {line: 2, character: 1}
+    default.e:
+      start: {line: 4, character: 16}
+      end: {line: 4, character: 17}
+  timeOffsetSeconds: 409.669228
+finalState:
+  documentContents: |+
+    f
+    x
+    z
+
+    const values = [e, f, x, z]
+
+  selections:
+    - anchor: {line: 6, character: 0}
+      active: {line: 6, character: 0}
+  thatMark:
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 4, character: 19}
+        end: {line: 4, character: 26}
+      isReversed: false
+      hasExplicitRange: true
+  sourceMark:
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 0, character: 0}
+        end: {line: 0, character: 1}
+      isReversed: false
+      hasExplicitRange: true
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 1, character: 0}
+        end: {line: 1, character: 1}
+      isReversed: false
+      hasExplicitRange: true
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 2, character: 0}
+        end: {line: 2, character: 1}
+      isReversed: false
+      hasExplicitRange: true
+  timeOffsetSeconds: 409.880357
+ide:
+  flashes:
+    - style: referenced
+      range:
+        type: character
+        start: {line: 0, character: 0}
+        end: {line: 0, character: 1}
+    - style: referenced
+      range:
+        type: character
+        start: {line: 1, character: 0}
+        end: {line: 1, character: 1}
+    - style: referenced
+      range:
+        type: character
+        start: {line: 2, character: 0}
+        end: {line: 2, character: 1}
+    - style: pendingModification0
+      range:
+        type: character
+        start: {line: 4, character: 16}
+        end: {line: 4, character: 17}
+    - style: pendingModification0
+      range:
+        type: character
+        start: {line: 4, character: 19}
+        end: {line: 4, character: 26}

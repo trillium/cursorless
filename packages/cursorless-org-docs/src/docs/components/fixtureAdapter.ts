@@ -168,6 +168,7 @@ export function convertHatMarksToDecorations(
         line: mark.start.line,
         character: mark.start.character + 1,
       },
+      alwaysWrap: true, // Force Shiki to wrap the character instead of applying to line
       properties: {
         class: `hat hat-${hatType}`,
         // eslint-disable-next-line @typescript-eslint/naming-convention

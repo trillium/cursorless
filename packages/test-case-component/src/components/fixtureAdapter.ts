@@ -164,12 +164,14 @@ export function convertHatMarksToDecorations(
 
     // Create a single-character range decoration
     // The CSS will add the hat visual using ::before pseudo-element
+    // alwaysWrap: true ensures hats create their own span and don't merge with line decorations
     decorations.push({
       start: mark.start,
       end: {
         line: mark.start.line,
         character: mark.start.character + 1,
       },
+      alwaysWrap: true,
       properties: {
         class: `hat hat-${hatType}`,
         // eslint-disable-next-line @typescript-eslint/naming-convention

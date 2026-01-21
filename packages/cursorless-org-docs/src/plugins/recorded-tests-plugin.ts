@@ -35,7 +35,12 @@ function loadRecordedTests(): RecordedTests {
   const fixturesByLanguage: Record<string, TestCaseFixture[]> = {};
   let errorCount = 0;
 
-  for (const test of getRecordedTestPaths()) {
+  // Only load tests from the visualized directory
+  const visualizedTests = getRecordedTestPaths().filter((test) =>
+    test.path.includes(path.sep + "visualized" + path.sep)
+  );
+
+  for (const test of visualizedTests) {
     try {
       const fileContents = fs.readFileSync(test.path, "utf8");
       const data = yaml.load(fileContents) as any;
@@ -63,6 +68,37 @@ function loadRecordedTests(): RecordedTests {
         continue;
       }
 
+      // Transform ide.flashes to decorations format for visualization
+      let decorations: TestCaseFixture["decorations"] = undefined;
+      if (data.ide?.flashes) {
+        decorations = data.ide.flashes.map((flash: any) => {
+          const range = flash.range;
+          // Handle both character and line range types
+          let start: { line: number; character: number };
+          let end: { line: number; character: number };
+
+          if (range.type === "line") {
+            // Line ranges use numeric start/end
+            start = { line: range.start, character: 0 };
+            end = { line: range.end, character: 0 };
+          } else {
+            // Character ranges use object start/end
+            start = range.start;
+            end = range.end;
+          }
+
+          return {
+            name: flash.style,
+            type: range.type || "character",
+            start,
+            end,
+          };
+        });
+      } else if (data.decorations) {
+        // Fallback to old decorations format if present
+        decorations = data.decorations;
+      }
+
       const fixture: TestCaseFixture = {
         languageId: data.languageId,
         command: data.command
@@ -72,7 +108,7 @@ function loadRecordedTests(): RecordedTests {
           : undefined,
         initialState: data.initialState,
         finalState: data.finalState,
-        decorations: data.decorations,
+        decorations,
       };
 
       fixtures.push(fixture);
@@ -90,7 +126,7 @@ function loadRecordedTests(): RecordedTests {
   const languageIds = Object.keys(fixturesByLanguage).sort();
 
   console.log(
-    `Loaded ${fixtures.length} recorded test fixtures for ${languageIds.length} languages`,
+    `Loaded ${fixtures.length} recorded test fixtures from visualized/ directory for ${languageIds.length} languages`,
   );
   if (errorCount > 0) {
     console.warn(`Skipped ${errorCount} fixtures due to errors`);
