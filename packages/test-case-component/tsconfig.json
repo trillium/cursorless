@@ -4,7 +4,7 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "lib": ["es5", "es6", "dom"]
+    "lib": ["es2022", "dom"]
   },
   "references": [],
   "include": [

@@ -1,7 +1,4 @@
-import {
-  TestCaseComponentPage,
-  loadFixture,
-} from "@cursorless/test-case-component";
+import { TestCaseComponentPage } from "@cursorless/test-case-component";
 
 import { cheatsheetBodyClasses } from "@cursorless/cheatsheet";
 
@@ -62,11 +59,9 @@ export async function getStaticProps() {
     testSelectedFiles,
   );
   const data = [...dataActions, ...dataDecorations];
-  const loaded = (
-    await Promise.all(data.map((val) => loadFixture(val)))
-  ).filter((val) => val !== undefined);
 
-  return { props: { data, loaded, bodyClasses: cheatsheetBodyClasses } };
+  // Pass raw fixture data instead of processed HTML
+  return { props: { data, loaded: data, bodyClasses: cheatsheetBodyClasses } };
 }
 
 export function App({ data, loaded }: { data: any; loaded: any }) {
