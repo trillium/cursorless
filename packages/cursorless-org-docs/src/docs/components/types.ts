@@ -14,7 +14,8 @@ export type SelectionType =
   | "referenced"
   | "pendingModification0"
   | "pendingModification1"
-  | "pendingDelete";
+  | "pendingDelete"
+  | "highlight";
 export type FacetValue = ScopeSupportFacet | PlaintextScopeSupportFacet;
 
 export interface ScopeTests {

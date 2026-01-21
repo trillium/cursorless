@@ -70,4 +70,9 @@ export const highlightColors = {
     borderSolid: "#ff000078",
     borderPorous: "#ff00004a",
   },
+  highlight: {
+    background: "#ffff0040", // Semi-transparent yellow (for ide.highlights)
+    borderSolid: "#ffff00",
+    borderPorous: "#ffff0060",
+  },
 };

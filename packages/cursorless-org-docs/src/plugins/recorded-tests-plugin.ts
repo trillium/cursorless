@@ -68,9 +68,10 @@ function loadRecordedTests(): RecordedTests {
         continue;
       }
 
-      // Transform ide.flashes to decorations format for DURING state visualization
+      // Transform ide.flashes and ide.highlights to decorations format for DURING state visualization
       let flashes: TestCaseFixture["flashes"] = undefined;
-      if (data.ide?.flashes) {
+
+      if (data.ide?.flashes && data.ide.flashes.length > 0) {
         flashes = data.ide.flashes.map((flash: any) => {
           const range = flash.range;
           // Handle both character and line range types
@@ -93,6 +94,28 @@ function loadRecordedTests(): RecordedTests {
             start,
             end,
           };
+        });
+      } else if (data.ide?.highlights) {
+        flashes = data.ide.highlights.flatMap((highlight: any) => {
+          return highlight.ranges.map((range: any) => {
+            let start: { line: number; character: number };
+            let end: { line: number; character: number };
+
+            if (range.type === "line") {
+              start = { line: range.start, character: 0 };
+              end = { line: range.end, character: 0 };
+            } else {
+              start = range.start;
+              end = range.end;
+            }
+
+            return {
+              style: "highlight",
+              type: range.type || "character",
+              start,
+              end,
+            };
+          });
         });
       }
 

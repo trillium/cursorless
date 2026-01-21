@@ -1,0 +1,49 @@
+languageId: typescript
+command:
+  version: 7
+  spokenForm: highlight name
+  action:
+    name: highlight
+    target:
+      type: primitive
+      modifiers:
+        - type: containingScope
+          scopeType: {type: name}
+  usePrePhraseSnapshot: true
+initialState:
+  documentContents: |-
+    function foo(
+        word: string
+    ){
+        return `foo ${word} `
+    }
+  selections:
+    - anchor: {line: 3, character: 10}
+      active: {line: 3, character: 10}
+  marks: {}
+  timeOffsetSeconds: 3468.538683
+finalState:
+  documentContents: |-
+    function foo(
+        word: string
+    ){
+        return `foo ${word} `
+    }
+  selections:
+    - anchor: {line: 3, character: 10}
+      active: {line: 3, character: 10}
+  thatMark:
+    - type: ScopeTypeTarget
+      contentRange:
+        start: {line: 0, character: 9}
+        end: {line: 0, character: 12}
+      isReversed: false
+      hasExplicitRange: true
+  timeOffsetSeconds: 3468.53964
+ide:
+  flashes: []
+  highlights:
+    - ranges:
+        - type: character
+          start: {line: 0, character: 9}
+          end: {line: 0, character: 12}
