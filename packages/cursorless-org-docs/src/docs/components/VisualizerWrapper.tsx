@@ -77,11 +77,19 @@ export function VisualizerWrapper({
   console.log(`  Flashes count:`, fixture.flashes?.length || 0);
   console.log(`  Flashes data:`, fixture.flashes);
 
-  // Combine initial state with flashes for DURING state visualization
-  // This shows both the marks/selections AND the flash highlights
-  // Flashes are relative to FINAL state positions
+  // Determine which document state to use for DURING visualization
+  // - pendingDelete flashes reference INITIAL state positions (what's being deleted)
+  // - other flashes (referenced, pendingModification) reference FINAL state positions
+  const hasPendingDelete = fixture.flashes?.some(
+    (flash) => flash.style === "pendingDelete",
+  );
+  const duringState = hasPendingDelete
+    ? fixture.initialState
+    : fixture.finalState;
+  const duringCode = duringState.documentContents;
+
   const duringDecorations = fixture.flashes
-    ? convertFixtureStateWithFlashes(fixture.finalState, fixture.flashes)
+    ? convertFixtureStateWithFlashes(duringState, fixture.flashes)
     : undefined;
 
   // Debug: Log when DURING state is rendered
@@ -123,7 +131,7 @@ export function VisualizerWrapper({
               languageId={fixture.languageId}
               decorations={duringDecorations}
             >
-              {fixture.finalState.documentContents}
+              {duringCode}
             </Code>
           </div>
         )}

@@ -13,7 +13,8 @@ export type SelectionType =
   | "sourceMark"
   | "referenced"
   | "pendingModification0"
-  | "pendingModification1";
+  | "pendingModification1"
+  | "pendingDelete";
 export type FacetValue = ScopeSupportFacet | PlaintextScopeSupportFacet;
 
 export interface ScopeTests {

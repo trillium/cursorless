@@ -47,7 +47,9 @@ export const highlightColors = {
   },
 
   // Flash/highlight styles from ide.flashes (DURING state)
-  // These match the pendingModification and referenced styles from Cursorless
+  // - referenced: source items being read (use with final state)
+  // - pendingModification0/1: destination targets being modified (use with final state)
+  // - pendingDelete: ranges being deleted (use with initial state)
   referenced: {
     background: "#00ffd525", // Semi-transparent cyan (similar to iteration)
     borderSolid: "#00ffd578",
@@ -62,5 +64,10 @@ export const highlightColors = {
     background: "#ff00ff40", // Semi-transparent magenta (alternative target)
     borderSolid: "#ff00ff",
     borderPorous: "#ff00ff60",
+  },
+  pendingDelete: {
+    background: "#ff00002d", // Semi-transparent red (what's being deleted)
+    borderSolid: "#ff000078",
+    borderPorous: "#ff00004a",
   },
 };
