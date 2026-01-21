@@ -101,6 +101,7 @@ function loadRecordedTests(): RecordedTests {
         command: data.command
           ? {
               spokenForm: data.command.spokenForm,
+              action: data.command.action,
             }
           : undefined,
         initialState: data.initialState,
@@ -133,19 +134,27 @@ function loadRecordedTests(): RecordedTests {
   const languageIds = Object.keys(fixturesByLanguage).sort();
 
   // Count fixtures with DURING state data
-  const fixturesWithFlashes = fixtures.filter((f) => f.flashes && f.flashes.length > 0);
+  const fixturesWithFlashes = fixtures.filter(
+    (f) => f.flashes && f.flashes.length > 0,
+  );
 
   console.log(
     `Loaded ${fixtures.length} recorded test fixtures from visualized/ directory for ${languageIds.length} languages`,
   );
-  console.log(`  Fixtures with DURING state (flashes): ${fixturesWithFlashes.length}`);
+  console.log(
+    `  Fixtures with DURING state (flashes): ${fixturesWithFlashes.length}`,
+  );
   if (errorCount > 0) {
     console.warn(`Skipped ${errorCount} fixtures due to errors`);
   }
   languageIds.forEach((lang) => {
     const langFixtures = fixturesByLanguage[lang];
-    const withFlashes = langFixtures.filter((f) => f.flashes && f.flashes.length > 0).length;
-    console.log(`  ${lang}: ${langFixtures.length} fixtures (${withFlashes} with DURING state)`);
+    const withFlashes = langFixtures.filter(
+      (f) => f.flashes && f.flashes.length > 0,
+    ).length;
+    console.log(
+      `  ${lang}: ${langFixtures.length} fixtures (${withFlashes} with DURING state)`,
+    );
   });
 
   return { fixtures, fixturesByLanguage, languageIds };

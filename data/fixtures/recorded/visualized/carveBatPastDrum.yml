@@ -1,0 +1,56 @@
+languageId: typescript
+command:
+  version: 7
+  spokenForm: carve bat past drum
+  action:
+    name: cutToClipboard
+    target:
+      type: range
+      anchor:
+        type: primitive
+        mark: {type: decoratedSymbol, symbolColor: default, character: b}
+      active:
+        type: primitive
+        mark: {type: decoratedSymbol, symbolColor: default, character: d}
+      excludeAnchor: false
+      excludeActive: false
+  usePrePhraseSnapshot: true
+initialState:
+  documentContents: aaa bbb ccc ddd
+  selections:
+    - anchor: {line: 0, character: 15}
+      active: {line: 0, character: 15}
+  marks:
+    default.b:
+      start: {line: 0, character: 4}
+      end: {line: 0, character: 7}
+    default.d:
+      start: {line: 0, character: 12}
+      end: {line: 0, character: 15}
+  timeOffsetSeconds: 2859.581444
+finalState:
+  documentContents: aaa
+  selections:
+    - anchor: {line: 0, character: 3}
+      active: {line: 0, character: 3}
+  clipboard: bbb ccc ddd
+  thatMark:
+    - type: RawSelectionTarget
+      contentRange:
+        start: {line: 0, character: 3}
+        end: {line: 0, character: 3}
+      isReversed: false
+      hasExplicitRange: true
+  timeOffsetSeconds: 2859.711428
+ide:
+  flashes:
+    - style: referenced
+      range:
+        type: character
+        start: {line: 0, character: 4}
+        end: {line: 0, character: 15}
+    - style: pendingDelete
+      range:
+        type: character
+        start: {line: 0, character: 3}
+        end: {line: 0, character: 4}
