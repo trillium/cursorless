@@ -1,7 +1,18 @@
 /* eslint-disable import/no-anonymous-default-export */
 
-import { fontFamily } from "tailwindcss/defaultTheme";
 import { readFileSync } from "node:fs";
+
+// Default mono font stack from Tailwind CSS
+const defaultMonoFonts = [
+  "ui-monospace",
+  "SFMono-Regular",
+  "Menlo",
+  "Monaco",
+  "Consolas",
+  "Liberation Mono",
+  "Courier New",
+  "monospace",
+];
 
 const CONTENT_RATIO = 1000 / 814;
 
@@ -57,8 +68,8 @@ export default {
         stretched: { raw: "(min-aspect-ratio: 2/1), (max-aspect-ratio: 1/1)" },
       },
       fontFamily: {
-        mono: ["Inconsolata", ...fontFamily.mono],
-        monoWide: ["Inconsolata-SemiExpanded", ...fontFamily.mono],
+        mono: ["Inconsolata", ...defaultMonoFonts],
+        monoWide: ["Inconsolata-SemiExpanded", ...defaultMonoFonts],
       },
       width: {
         smBase: smallWidth,
