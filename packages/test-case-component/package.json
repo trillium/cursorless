@@ -13,7 +13,6 @@
     }
   },
   "scripts": {
-    "build": "my-ts-node src/buildDictionary.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "compile:tsc": "tsc --build",
