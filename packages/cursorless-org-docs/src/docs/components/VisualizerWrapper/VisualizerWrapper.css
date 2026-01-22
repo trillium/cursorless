@@ -90,22 +90,39 @@
   right: 0.5rem;
   z-index: 10;
   display: flex;
+  flex-direction: row;
   gap: 0.5rem;
 }
 
-.jumbotron-play-pause {
-  padding: 0.5rem;
+.jumbotron-control-button {
+  min-width: 90px;
+  padding: 0.5rem 0.75rem;
   background: var(--ifm-color-emphasis-200);
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 6px;
   cursor: pointer;
-  font-size: 1rem;
-  line-height: 1;
+  font-size: 0.9rem;
+  line-height: 1.2;
   transition: background 0.2s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.jumbotron-play-pause:hover {
+.jumbotron-control-button:hover {
   background: var(--ifm-color-emphasis-300);
+}
+
+.jumbotron-control-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.jumbotron-control-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-800);
 }
 
 .jumbotron-state {
@@ -214,4 +231,27 @@
   border-radius: 3px;
   font-family: monospace;
   font-size: 0.85rem;
+}
+
+/* Visibility toggle utility classes */
+.hide-highlights .shiki span[style*="background"] {
+  background: transparent !important;
+}
+
+.hide-highlights .shiki span[style*="border"] {
+  border: none !important;
+}
+
+/* Highlight toggle icon overlay */
+.jumbotron-highlight-toggle-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.jumbotron-highlight-toggle-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.8em;
 }

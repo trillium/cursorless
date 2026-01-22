@@ -25,6 +25,7 @@ export interface CursorlessFixtureState {
   selections?: CursorlessFixtureSelection[];
   thatMark?: [CursorlessFixtureSelection];
   sourceMark?: [CursorlessFixtureSelection];
+  clipboard?: string;
 }
 
 export interface CursorlessFixtureSelection {

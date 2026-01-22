@@ -5,7 +5,6 @@
   "license": "MIT",
   "type": "module",
   "main": "./out/index.js",
-  "types": "./out/index.d.ts",
   "exports": {
     ".": {
       "cursorless:bundler": "./src/index.ts",
@@ -23,7 +22,6 @@
     "watch": "pnpm run --filter @cursorless/test-case-component --parallel '/^watch:.*/'",
     "clean": "rm -rf ./out tsconfig.tsbuildinfo ./dist ./build"
   },
-  "license": "MIT",
   "dependencies": {
     "@cursorless/common": "workspace:*",
     "fs-extra": "11.2.0",
@@ -34,12 +32,6 @@
     "yaml": "2.2.1"
   },
   "types": "./out/index.d.ts",
-  "exports": {
-    ".": {
-      "cursorless:bundler": "./src/index.ts",
-      "default": "./out/index.js"
-    }
-  },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "29.5.12",

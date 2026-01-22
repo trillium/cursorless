@@ -22,6 +22,10 @@ interface Props {
     name: string;
     url: string;
   };
+
+  // Whether to show the copy button (default: true)
+  showCopyButton?: boolean;
+
   children: string;
 }
 
@@ -32,6 +36,7 @@ export function Code({
   fixtureState,
   minLines,
   link,
+  showCopyButton = true,
   children,
 }: Props) {
   const [html, setHtml] = React.useState("");
@@ -111,9 +116,11 @@ export function Code({
   return (
     <div className="code-container">
       {renderLink()}
-      <button onClick={handleCopy} className="code-copy-button">
-        {copied ? "✅ Copied!" : "📋 Copy"}
-      </button>
+      {showCopyButton && (
+        <button onClick={handleCopy} className="code-copy-button">
+          {copied ? "✅ Copied!" : "📋 Copy"}
+        </button>
+      )}
       <div dangerouslySetInnerHTML={{ __html: html }}></div>{" "}
     </div>
   );

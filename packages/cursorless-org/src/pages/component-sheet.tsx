@@ -64,7 +64,12 @@ export async function getStaticProps() {
   return { props: { data, loaded: data, bodyClasses: cheatsheetBodyClasses } };
 }
 
-export function App({ data, loaded }: { data: any; loaded: any }) {
+interface PageProps {
+  data: any;
+  loaded: any;
+}
+
+export function Page({ data, loaded }: PageProps) {
   return (
     <>
       <Head>
@@ -75,4 +80,4 @@ export function App({ data, loaded }: { data: any; loaded: any }) {
   );
 }
 
-export default App;
+export default Page;

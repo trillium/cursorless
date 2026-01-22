@@ -11,7 +11,7 @@ import { defineConfig } from "eslint/config";
 import tsEslint from "typescript-eslint";
 import { commonConfig } from "./packages/common/eslint.config.mts";
 import { cursorlessEngineConfig } from "./packages/cursorless-engine/eslint.config.mts";
-import { cursorlessOrgConfig } from "./packages/cursorless-org/eslint.config.mts";
+import cursorlessOrgConfig from "./packages/cursorless-org/eslint.config.mts";
 import { cursorlessVscodeConfig } from "./packages/cursorless-vscode/eslint.config.mts";
 
 const ignoresConfig: ConfigWithExtends = {
