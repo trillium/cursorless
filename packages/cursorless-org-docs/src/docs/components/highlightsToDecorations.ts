@@ -35,7 +35,9 @@ function getStyleString(style: Style): string {
     `outline-style: ${getBorderStyle(style.borderStyle)};` +
     `border-radius: ${getBorderRadius(style.borderRadius)};` +
     `outline-width: ${BORDER_WIDTH};` +
-    `outline-offset: -${BORDER_WIDTH};`
+    `outline-offset: -${BORDER_WIDTH};` +
+    `padding-top: 0.25rem;` +
+    `padding-bottom: 0.25rem;`
   );
 }
 

@@ -271,6 +271,23 @@ export function VisualizerWrapper({
           </div>
         </div>
 
+        {(hasClipboard || snippetDescription) && (
+          <div className="visualizer-metadata">
+            {hasClipboard && (
+              <div className="visualizer-metadata-item">
+                <strong>Clipboard:</strong>
+                <code>{getClipboardForState(currentState) || "(empty)"}</code>
+              </div>
+            )}
+            {snippetDescription && (
+              <div className="visualizer-metadata-item">
+                <strong>Snippet:</strong>
+                <pre>{JSON.stringify(snippetDescription, null, 2)}</pre>
+              </div>
+            )}
+          </div>
+        )}
+
         <div
           className="jumbotron-dots"
           role="radiogroup"
@@ -291,23 +308,6 @@ export function VisualizerWrapper({
             />
           ))}
         </div>
-
-        {(hasClipboard || snippetDescription) && (
-          <div className="visualizer-metadata">
-            {hasClipboard && (
-              <div className="visualizer-metadata-item">
-                <strong>Clipboard:</strong>
-                <code>{getClipboardForState(currentState) || "(empty)"}</code>
-              </div>
-            )}
-            {snippetDescription && (
-              <div className="visualizer-metadata-item">
-                <strong>Snippet:</strong>
-                <pre>{JSON.stringify(snippetDescription, null, 2)}</pre>
-              </div>
-            )}
-          </div>
-        )}
       </div>
     );
   }
