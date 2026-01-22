@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+    },
+    "nextjs-mcp": {
+      "command": "npx",
+      "args": ["-y", "@upstash/mcp-server-nextjs"]
+    }
+  }
+}

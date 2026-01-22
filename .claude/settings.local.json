@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(pnpm run typecheck:*)",
+      "Bash(pnpm run:*)",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(pnpm compile:*)",
+      "Bash(pnpm compile:esbuild:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

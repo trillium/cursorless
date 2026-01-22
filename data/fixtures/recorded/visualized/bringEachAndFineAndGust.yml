@@ -1,0 +1,97 @@
+languageId: plaintext
+command:
+  version: 7
+  spokenForm: bring each and fine and gust
+  action:
+    name: replaceWithTarget
+    source:
+      type: list
+      elements:
+        - type: primitive
+          mark: {type: decoratedSymbol, symbolColor: default, character: e}
+        - type: primitive
+          mark: {type: decoratedSymbol, symbolColor: default, character: f}
+        - type: primitive
+          mark: {type: decoratedSymbol, symbolColor: default, character: g}
+    destination: {type: implicit}
+  usePrePhraseSnapshot: true
+initialState:
+  documentContents: |+
+    e f g
+
+  selections:
+    - anchor: {line: 2, character: 0}
+      active: {line: 2, character: 0}
+  marks:
+    default.e:
+      start: {line: 0, character: 0}
+      end: {line: 0, character: 1}
+    default.f:
+      start: {line: 0, character: 2}
+      end: {line: 0, character: 3}
+    default.g:
+      start: {line: 0, character: 4}
+      end: {line: 0, character: 5}
+  timeOffsetSeconds: 2.980462
+finalState:
+  documentContents: |-
+    e f g
+
+    e f g
+  selections:
+    - anchor: {line: 2, character: 5}
+      active: {line: 2, character: 5}
+  thatMark:
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 2, character: 0}
+        end: {line: 2, character: 5}
+      isReversed: false
+      hasExplicitRange: true
+  sourceMark:
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 0, character: 0}
+        end: {line: 0, character: 1}
+      isReversed: false
+      hasExplicitRange: true
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 0, character: 2}
+        end: {line: 0, character: 3}
+      isReversed: false
+      hasExplicitRange: true
+    - type: UntypedTarget
+      contentRange:
+        start: {line: 0, character: 4}
+        end: {line: 0, character: 5}
+      isReversed: false
+      hasExplicitRange: true
+  timeOffsetSeconds: 3.197469
+ide:
+  flashes:
+    - style: referenced
+      range:
+        type: character
+        start: {line: 0, character: 0}
+        end: {line: 0, character: 1}
+    - style: referenced
+      range:
+        type: character
+        start: {line: 0, character: 2}
+        end: {line: 0, character: 3}
+    - style: referenced
+      range:
+        type: character
+        start: {line: 0, character: 4}
+        end: {line: 0, character: 5}
+    - style: pendingModification0
+      range:
+        type: character
+        start: {line: 2, character: 0}
+        end: {line: 2, character: 0}
+    - style: pendingModification0
+      range:
+        type: character
+        start: {line: 2, character: 0}
+        end: {line: 2, character: 5}

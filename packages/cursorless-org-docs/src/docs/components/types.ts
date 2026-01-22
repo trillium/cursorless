@@ -6,6 +6,16 @@ import type {
 } from "@cursorless/common";
 
 export type RangeType = "content" | "removal";
+export type SelectionType =
+  | "selection"
+  | "decoration"
+  | "thatMark"
+  | "sourceMark"
+  | "referenced"
+  | "pendingModification0"
+  | "pendingModification1"
+  | "pendingDelete"
+  | "highlight";
 export type FacetValue = ScopeSupportFacet | PlaintextScopeSupportFacet;
 
 export interface ScopeTests {
