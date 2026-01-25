@@ -25,6 +25,7 @@ import type {
 } from "./ScopeVisualizerCommandApi";
 import type { VscodeSnippets } from "./VscodeSnippets";
 import type { VscodeTutorial } from "./VscodeTutorial";
+import type { ThatMarkVisualizer } from "./ThatMarkVisualizer";
 import {
   showDocumentation,
   showQuickPick,
@@ -44,6 +45,7 @@ export function registerCommands(
   testCaseRecorder: TestCaseRecorder,
   scopeTestRecorder: ScopeTestRecorder,
   scopeVisualizer: ScopeVisualizer,
+  thatMarkVisualizer: ThatMarkVisualizer,
   keyboardCommands: KeyboardCommands,
   hats: VscodeHats,
   tutorial: VscodeTutorial,
@@ -118,6 +120,10 @@ export function registerCommands(
     ["cursorless.hideScopeVisualizer"]: scopeVisualizer.stop,
     ["cursorless.scopeVisualizer.openUrl"]:
       showScopeVisualizerItemDocumentation,
+
+    // That mark visualizer
+    ["cursorless.showThatMark"]: () => thatMarkVisualizer.start(),
+    ["cursorless.hideThatMark"]: () => thatMarkVisualizer.stop(),
 
     // Command history
     ["cursorless.analyzeCommandHistory"]: () =>

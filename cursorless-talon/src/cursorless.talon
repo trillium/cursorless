@@ -35,6 +35,11 @@ tag: user.cursorless
 {user.cursorless_hide_scope_visualizer}:
     user.private_cursorless_hide_scope_visualizer()
 
+{user.cursorless_show_scope_visualizer} {user.cursorless_simple_mark}:
+    user.private_cursorless_show_that_mark(cursorless_simple_mark)
+hide {user.cursorless_simple_mark}:
+    user.private_cursorless_hide_that_mark(cursorless_simple_mark)
+
 {user.cursorless_homophone} settings:
     user.private_cursorless_show_settings_in_ide()
 

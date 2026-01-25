@@ -32,7 +32,6 @@ import {
   SurroundingPairScopeHandler,
 } from "./SurroundingPairScopeHandler";
 import { InteriorScopeHandler } from "./SurroundingPairScopeHandler/InteriorScopeHandler";
-import { ThatScopeHandler } from "./ThatScopeHandler";
 import { TokenScopeHandler } from "./TokenScopeHandler";
 import { WordScopeHandler } from "./WordScopeHandler/WordScopeHandler";
 import type { StoredTargetMap } from "../../../core/StoredTargets";
@@ -122,13 +121,6 @@ export class ScopeHandlerFactoryImpl implements ScopeHandlerFactory {
           this.languageDefinitions,
           scopeType,
           languageId,
-        );
-      case "that":
-        return new ThatScopeHandler(
-          this,
-          scopeType,
-          languageId,
-          this.storedTargets,
         );
       case "interior":
         return InteriorScopeHandler.maybeCreate(

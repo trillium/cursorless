@@ -55,6 +55,8 @@ export const cursorlessCommandIds = [
   "cursorless.showScopeVisualizer",
   "cursorless.hideScopeVisualizer",
   "cursorless.scopeVisualizer.openUrl",
+  "cursorless.showThatMark",
+  "cursorless.hideThatMark",
   "cursorless.tutorial.start",
   "cursorless.tutorial.next",
   "cursorless.tutorial.previous",
@@ -105,6 +107,12 @@ export const cursorlessCommandDescriptions: Record<
     "Hide the scope visualizer",
   ),
   ["cursorless.scopeVisualizer.openUrl"]: new VisibleCommand("Open in browser"),
+  ["cursorless.showThatMark"]: new HiddenCommand(
+    "Show highlighting for the 'that' mark",
+  ),
+  ["cursorless.hideThatMark"]: new HiddenCommand(
+    "Hide highlighting for the 'that' mark",
+  ),
   ["cursorless.analyzeCommandHistory"]: new VisibleCommand(
     "Analyze collected command history",
   ),
