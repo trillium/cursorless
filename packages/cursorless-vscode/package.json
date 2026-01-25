@@ -125,6 +125,14 @@
         "title": "Cursorless: Open in browser"
       },
       {
+        "command": "cursorless.showThatMark",
+        "title": "Cursorless: Show highlighting for the 'that' mark"
+      },
+      {
+        "command": "cursorless.hideThatMark",
+        "title": "Cursorless: Hide highlighting for the 'that' mark"
+      },
+      {
         "command": "cursorless.analyzeCommandHistory",
         "title": "Cursorless: Analyze collected command history"
       },

@@ -61,6 +61,7 @@ import { KeyboardCommands } from "./keyboard/KeyboardCommands";
 import { registerCommands } from "./registerCommands";
 import { revisualizeOnCustomRegexChange } from "./revisualizeOnCustomRegexChange";
 import { storedTargetHighlighter } from "./storedTargetHighlighter";
+import { ThatMarkVisualizer } from "./ThatMarkVisualizer";
 import { vscodeApi } from "./vscodeApi";
 
 /**
@@ -169,6 +170,9 @@ export async function activate(
 
   context.subscriptions.push(storedTargetHighlighter(vscodeIDE, storedTargets));
 
+  const thatMarkVisualizer = new ThatMarkVisualizer(vscodeIDE, storedTargets);
+  context.subscriptions.push(thatMarkVisualizer);
+
   const vscodeTutorial = createTutorial(
     context,
     normalizedIde,
@@ -188,6 +192,7 @@ export async function activate(
     testCaseRecorder,
     scopeTestRecorder,
     scopeVisualizer,
+    thatMarkVisualizer,
     keyboardCommands,
     hats,
     vscodeTutorial,

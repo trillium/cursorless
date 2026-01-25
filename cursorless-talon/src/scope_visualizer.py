@@ -25,3 +25,23 @@ class Actions:
         actions.user.private_cursorless_run_rpc_command_no_wait(
             "cursorless.hideScopeVisualizer"
         )
+
+    def private_cursorless_show_that_mark(
+        mark: dict,  # pyright: ignore [reportGeneralTypeIssues]
+    ):
+        """Shows highlighting for a simple mark (e.g. 'that')"""
+        mark_type = mark.get("type")
+        if mark_type == "that":
+            actions.user.private_cursorless_run_rpc_command_no_wait(
+                "cursorless.showThatMark"
+            )
+
+    def private_cursorless_hide_that_mark(
+        mark: dict,  # pyright: ignore [reportGeneralTypeIssues]
+    ):
+        """Hides highlighting for a simple mark (e.g. 'that')"""
+        mark_type = mark.get("type")
+        if mark_type == "that":
+            actions.user.private_cursorless_run_rpc_command_no_wait(
+                "cursorless.hideThatMark"
+            )
