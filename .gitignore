@@ -54,3 +54,4 @@ cursorless.nvim/node/test-harness
 
 # nix
 .direnv/
+.beads
