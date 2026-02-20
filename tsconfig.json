@@ -73,6 +73,9 @@
     },
     {
       "path": "./packages/vscode-common"
+    },
+    {
+      "path": "./packages/zed-common"
     }
   ]
 }

@@ -996,6 +996,18 @@ importers:
         specifier: 1.98.0
         version: 1.98.0
 
+  packages/zed-common:
+    devDependencies:
+      '@types/mocha':
+        specifier: ^10.0.10
+        version: 10.0.10
+      '@types/sinon':
+        specifier: ^21.0.0
+        version: 21.0.0
+      sinon:
+        specifier: ^21.0.1
+        version: 21.0.1
+
 packages:
 
   '@algolia/abtesting@1.13.0':

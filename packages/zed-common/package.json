@@ -1,0 +1,30 @@
+{
+  "name": "@cursorless/zed-common",
+  "version": "1.0.0",
+  "description": "JSON-RPC protocol layer for Cursorless-Zed communication",
+  "license": "MIT",
+  "type": "module",
+  "main": "./out/index.js",
+  "types": "./out/index.d.ts",
+  "exports": {
+    ".": {
+      "cursorless:bundler": "./src/index.ts",
+      "default": "./out/index.js"
+    }
+  },
+  "scripts": {
+    "compile:tsc": "tsc --build",
+    "compile:esbuild": "esbuild ./src/index.ts --sourcemap --format=esm --bundle --packages=external --outfile=./out/index.js",
+    "compile:cli": "esbuild ./src/cli.ts --sourcemap --format=cjs --bundle --platform=node --outfile=./dist/cli.cjs",
+    "compile": "pnpm compile:tsc && pnpm compile:esbuild",
+    "watch:tsc": "pnpm compile:tsc --watch",
+    "watch:esbuild": "pnpm compile:esbuild --watch",
+    "watch": "pnpm run --filter @cursorless/zed-common --parallel '/^watch:.*/'",
+    "clean": "rm -rf ./out tsconfig.tsbuildinfo ./dist ./build"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^21.0.0",
+    "sinon": "^21.0.1"
+  }
+}
