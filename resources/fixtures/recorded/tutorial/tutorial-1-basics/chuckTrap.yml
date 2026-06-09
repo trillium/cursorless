@@ -36,3 +36,10 @@ finalState:
       active: {line: 2, character: 6}
     - anchor: {line: 2, character: 35}
       active: {line: 2, character: 39}
+ide:
+  flashes:
+    - style: pendingDelete
+      range:
+        type: character
+        start: {line: 0, character: 8}
+        end: {line: 0, character: 11}
