@@ -24,6 +24,12 @@ export interface Token {
   text: string;
   range: { start: number; end: number }; // UTF-16 offsets within the line
   hat?: InputHat | null;
+  /**
+   * Optional syntax-highlight fill (6/8-digit hex, e.g. "#c0caf5"), a LOGIC-stage
+   * enrichment consumed by RENDER. Absent ⇒ highlighting off ⇒ byte-identical
+   * markup. Populated by logic/highlight.ts from a Shiki color map.
+   */
+  color?: string;
 }
 
 export interface Line {
@@ -43,6 +49,8 @@ export interface Column {
   isAnchor: boolean;
   hatColor?: HatColor;
   hatShape?: HatShape;
+  /** Syntax-highlight fill inherited from the owning Token; absent ⇒ no fill. */
+  color?: string;
 }
 
 // East_Asian_Width Wide (W) + Fullwidth (F) ranges. Covers CJK, Hangul,
@@ -151,6 +159,7 @@ export function expandColumns(line: Line, tabSize: number): Column[] {
           isAnchor,
           hatColor: anchorHat?.color,
           hatShape: anchorHat?.shape,
+          color: token.color,
         });
         col += advance;
         return;
@@ -165,6 +174,7 @@ export function expandColumns(line: Line, tabSize: number): Column[] {
         isAnchor,
         hatColor: anchorHat?.color,
         hatShape: anchorHat?.shape,
+        color: token.color,
       });
       col += w;
     });
