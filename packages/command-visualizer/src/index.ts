@@ -13,8 +13,19 @@ export {
 } from "./logic/pipeline";
 export {
   renderCommand,
+  renderCommandHighlighted,
   type RenderCommandOptions,
+  type RenderCommandHighlightedOptions,
 } from "./render-command";
+export {
+  buildColorMap,
+  applyColorMap,
+  colorAt,
+  resolveHighlightLang,
+  HIGHLIGHT_THEME,
+  type ColorMap,
+  type ColorSpan,
+} from "./logic/highlight";
 export {
   chainCascades,
   withBumpers,

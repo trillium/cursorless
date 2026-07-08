@@ -68,10 +68,13 @@ function emitSpan(c: Column, lineIdx: number, selections: Range[]): string {
   const hat = c.isAnchor
     ? `<svg xmlns="http://www.w3.org/2000/svg" class="hat" aria-hidden="true" viewBox="0 0 12 9"><use href="#hat-${c.hatShape}"/></svg>`
     : "";
+  // Syntax-highlight fill: emitted ONLY when the column carries a color. Absent
+  // ⇒ no style attribute ⇒ byte-identical to the un-highlighted markup.
+  const colorAttr = c.color ? ` style="color:${esc(c.color)}"` : "";
   // For blank tab filler emit a single space so the cell has selectable text.
   const text = c.text === "" ? "" : esc(c.text);
   return (
-    `<span class="${classes}" data-col="${c.col}"${spanAttr}${selAttr}${hatAttr}>` +
+    `<span class="${classes}" data-col="${c.col}"${spanAttr}${selAttr}${hatAttr}${colorAttr}>` +
     `${text}${hat}</span>`
   );
 }

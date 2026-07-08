@@ -58,9 +58,12 @@ function emitSpan(c: Column, cell: CellOverlay | undefined): string {
   const hat = c.isAnchor
     ? `<svg xmlns="http://www.w3.org/2000/svg" class="hat" aria-hidden="true" viewBox="0 0 12 9"><use href="#hat-${c.hatShape}"/></svg>`
     : "";
+  // Syntax-highlight fill: emitted ONLY when the column carries a color. Absent
+  // ⇒ no style attribute ⇒ byte-identical to the un-highlighted markup.
+  const colorAttr = c.color ? ` style="color:${esc(c.color)}"` : "";
   const text = c.text === "" ? "" : esc(c.text);
   return (
-    `<span class="${classes}" data-col="${c.col}"${spanAttr}${ovAttr}${stackAttr}${hatAttr}>` +
+    `<span class="${classes}" data-col="${c.col}"${spanAttr}${ovAttr}${stackAttr}${hatAttr}${colorAttr}>` +
     `${text}${hat}</span>`
   );
 }
