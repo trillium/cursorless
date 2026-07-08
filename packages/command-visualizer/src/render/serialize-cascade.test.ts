@@ -92,3 +92,35 @@ suite("command-visualizer/serialize-cascade line numbers", () => {
     assert.equal((html.match(/class="frame"/g) ?? []).length, 2);
   });
 });
+
+suite("command-visualizer/serialize-cascade syntax-highlight fill", () => {
+  /** A single-line, single-token frame, optionally carrying a color. */
+  function coloredState(color?: string): CascadeState {
+    const token: Line["tokens"][number] = {
+      text: "x",
+      range: { start: 0, end: 1 },
+      ...(color === undefined ? {} : { color }),
+    };
+    const frame: Frame = {
+      role: "before",
+      lines: [{ tokens: [token] }],
+      cursors: [],
+      selections: [],
+      decorations: [],
+    };
+    return { theme: "dark", tabSize: 4, frames: [frame] };
+  }
+
+  test("a colored column emits an inline color style", () => {
+    const html = serializeCascade(coloredState("#c0ffee"));
+    assert.match(html, /style="color:#c0ffee"/);
+  });
+
+  test("off ⇒ no color style attribute anywhere in the markup", () => {
+    const html = serializeCascade(coloredState());
+    assert.ok(
+      !html.includes('style="color:'),
+      "un-highlighted markup must carry no color style",
+    );
+  });
+});
