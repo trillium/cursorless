@@ -80,11 +80,11 @@ jobs:
         run: pnpm --color -F '!@cursorless/app-web' -F '!@cursorless/app-web-docs' build
 
       - name: Run unit tests (Linux)
-        run: xvfb-run -a pnpm --color test -- --maxWorkers=2
+        run: xvfb-run -a pnpm --color test
         if: runner.os == 'Linux'
 
       - name: Run unit tests (Win,Mac)
-        run: pnpm --color test -- --maxWorkers=2
+        run: pnpm --color test
         if: runner.os != 'Linux'
 
       - name: Run VSCode tests (Linux)

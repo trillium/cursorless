@@ -11,6 +11,7 @@ const config: Config = {
     ...preactModuleNameMapper,
     "\\.(css|scss)$": "<rootDir>/src/test/styleMock.ts",
   },
+  ...(process.env.CI && { maxWorkers: 2 }),
 };
 
 // oxlint-disable-next-line import/no-default-export
