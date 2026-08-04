@@ -101,7 +101,9 @@ repos:
     rev: v0.11.0
     hooks:
       - id: talon-fmt
+        stages: [manual]
       - id: tree-sitter-fmt
+        stages: [manual]
 
   - repo: https://github.com/lunarmodules/luacheck
     rev: v1.2.0
