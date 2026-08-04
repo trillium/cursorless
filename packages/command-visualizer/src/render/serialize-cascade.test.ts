@@ -41,7 +41,7 @@ suite("command-visualizer/serialize-cascade line numbers", () => {
       "root must carry data-line-numbers when on",
     );
     // Digit-count var reflects the largest line number (3 lines → 1 digit).
-    assert.match(html, /--gutter-digits:1;/);
+    assert.match(html, /--gutter-digits:1;/u);
 
     // (b) exactly one .cl-lineno per line, numbered 1..N (1-based).
     assert.deepEqual(lineNoTexts(html), ["1", "2", "3"]);
@@ -67,7 +67,7 @@ suite("command-visualizer/serialize-cascade line numbers", () => {
     // A ten-line document → largest line number "10" → 2 digits.
     const tenState = stateOf(Array.from({ length: 10 }, (_, i) => `line${i}`));
     const html = serializeCascade(tenState, { lineNumbers: true });
-    assert.match(html, /--gutter-digits:2;/);
+    assert.match(html, /--gutter-digits:2;/u);
     assert.deepEqual(lineNoTexts(html), [
       "1",
       "2",
