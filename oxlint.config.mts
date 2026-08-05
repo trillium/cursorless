@@ -72,6 +72,9 @@ const disabledRules = [
   "unicorn/no-null",
   "unicorn/no-object-as-default-parameter",
   "unicorn/no-useless-undefined",
+  // Unsatisfiable alongside oxfmt, which rewrites hex digits to lowercase
+  // while this rule requires uppercase. See `pnpm lint:ts` vs `pnpm lint:fmt`.
+  "unicorn/number-literal-case",
   "unicorn/prefer-at",
   "unicorn/prefer-event-target",
   "unicorn/prefer-module",

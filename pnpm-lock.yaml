@@ -298,6 +298,28 @@ importers:
         specifier: ^11.0.5
         version: 11.0.5
 
+  packages/command-visualizer:
+    dependencies:
+      '@cursorless/lib-common':
+        specifier: workspace:*
+        version: link:../lib-common
+      '@cursorless/lib-engine':
+        specifier: workspace:*
+        version: link:../lib-engine
+      js-yaml:
+        specifier: ^5.2.1
+        version: 5.2.1
+    devDependencies:
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
+      '@types/mocha':
+        specifier: ^10.0.10
+        version: 10.0.10
+      '@types/node':
+        specifier: ^24.13.2
+        version: 24.13.2
+
   packages/lib-cheatsheet:
     dependencies:
       '@cursorless/lib-common':
@@ -670,8 +692,8 @@ importers:
         specifier: ^2.2.3
         version: 2.2.3
       '@vscode/test-electron':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.1.0
+        version: 3.1.0
       cross-spawn:
         specifier: ^7.0.6
         version: 7.0.6
@@ -5187,8 +5209,8 @@ packages:
   '@vimeo/player@2.29.0':
     resolution: {integrity: sha512-9JjvjeqUndb9otCCFd0/+2ESsLk7VkDE6sxOBy9iy2ukezuQbplVRi+g9g59yAurKofbmTi/KcKxBGO/22zWRw==}
 
-  '@vscode/test-electron@3.0.0':
-    resolution: {integrity: sha512-TY5mC7aAjxSLDXsyjhrG8cJHgc/HLdiE5lvtW7hABYQrY24Qwozzr5UoO3HiuAM4Hzz4b7K/eZlwrCILj94CcA==}
+  '@vscode/test-electron@3.1.0':
+    resolution: {integrity: sha512-CRqv5u+YYoseuNVJ6Tyo4k0sF0mx4qnKMihRB0PjsUF8Dc0WKtCXo6CNL6nWWm5esfFQsQA/pejMj4ZbpJVLTw==}
     engines: {node: '>=22'}
 
   '@webassemblyjs/ast@1.14.1':
@@ -17054,7 +17076,7 @@ snapshots:
       native-promise-only: 0.8.1
       weakmap-polyfill: 2.0.4
 
-  '@vscode/test-electron@3.0.0':
+  '@vscode/test-electron@3.1.0':
     dependencies:
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
