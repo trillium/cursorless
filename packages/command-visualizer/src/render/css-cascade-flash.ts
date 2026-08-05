@@ -2,14 +2,11 @@
 // (the flash TIMING section) so the main module stays under the 250-line limit.
 // render/ → render/ import only; behavior unchanged.
 
-import {
-  DECORATION_HEX,
-  FLASH_PULSE_MS,
-  type OverlayStyleName,
-} from "../data/decorations";
-import type { Frame } from "../model/types";
+import { DECORATION_HEX, FLASH_PULSE_MS } from "../data/decorations";
+import type { OverlayStyleName } from "../data/decorations";
 import type { Timeline } from "../model/timeline";
-import { pct } from "./css-cascade";
+import type { Frame } from "../model/types";
+import { pct } from "./css-shared";
 
 // DURING beats — flash TIMING. A flash is a TRANSIENT beat *within* one
 // frame's timeline slot, not a static band. Two opposite directions:
@@ -46,7 +43,8 @@ const ADD_FLASH_STYLES = ["justAdded"] as const;
 // below. A short fade ramp (FADE_FRAC of the pulse) softens each edge but the
 // held-full-color span is exactly the pulse, which is what verify:flash-timing
 // measures. Result: the pulse is ~100ms for ANY N (no slot scaling).
-const FADE_FRAC = 0.4; // soft-edge ramp length as a fraction of the pulse window
+/** soft-edge ramp length as a fraction of the pulse window */
+const FADE_FRAC = 0.4;
 
 // Reference-class pre-edit flashes (Bring sources/destinations etc.) — they
 // sequence BEFORE deletion flashes inside a DURING window (real cursorless
@@ -57,15 +55,19 @@ const REFERENCE_FLASH_STYLES = [
   "pendingModification1",
 ] as const;
 
+/** A 0-1 timeline fraction as a clamped keyframe percentage. */
+function pct100(x: number): string {
+  return pct(Math.max(0, Math.min(100, x * 100)));
+}
+
 export function flashFadeKeyframes(
   frames: readonly Frame[],
   tl: Timeline,
   pulseMs: number = FLASH_PULSE_MS,
 ): string {
   const out: string[] = [];
-  const pct100 = (x: number) => pct(Math.max(0, Math.min(100, x * 100)));
 
-  frames.forEach((frame, k) => {
+  for (const [k, frame] of frames.entries()) {
     const lo = tl.startFrac[k];
     const hi = tl.endFrac[k];
 
@@ -90,11 +92,11 @@ export function flashFadeKeyframes(
             `  0% { background-color: transparent; }\n` +
             `  ${pct100(w[0])}% { background-color: transparent; }\n` +
             `  ${pct100(w[0] + 0.0001)}% { background-color: ${DECORATION_HEX[style as keyof typeof DECORATION_HEX]}; }\n` +
-            `  ${pct100(w[1])}% { background-color: ${DECORATION_HEX[style as keyof typeof DECORATION_HEX]}; }\n` +
-            (holdOn
-              ? `  100% { background-color: ${DECORATION_HEX[style as keyof typeof DECORATION_HEX]}; }\n`
-              : `  ${pct100(w[1] + 0.0001)}% { background-color: transparent; }\n  100% { background-color: transparent; }\n`) +
-            `}`,
+            `  ${pct100(w[1])}% { background-color: ${DECORATION_HEX[style as keyof typeof DECORATION_HEX]}; }\n${
+              holdOn
+                ? `  100% { background-color: ${DECORATION_HEX[style as keyof typeof DECORATION_HEX]}; }\n`
+                : `  ${pct100(w[1] + 0.0001)}% { background-color: transparent; }\n  100% { background-color: transparent; }\n`
+            }}`,
         );
       };
       for (const st of REFERENCE_FLASH_STYLES) {
@@ -102,9 +104,10 @@ export function flashFadeKeyframes(
           emit(st, refWin, false);
         }
       }
+      // held to the edit
       if (styles.has("pendingDelete")) {
         emit("pendingDelete", delWin, true);
-      } // held to the edit
+      }
     } else {
       // ADD pulse at the frame's slot start (post-edit justAdded).
       const durFrac = pulseMs / tl.totalMs;
@@ -122,14 +125,14 @@ export function flashFadeKeyframes(
         );
       }
     }
-  });
+  }
 
   return out.join("\n");
 }
 
 export function flashFadeRules(frames: readonly Frame[]): string {
   const rules: string[] = [];
-  frames.forEach((frame, k) => {
+  for (const [k, frame] of frames.entries()) {
     if (frame.role === "during") {
       const styles = new Set(frame.decorations.map((d) => d.style));
       for (const st of [...REFERENCE_FLASH_STYLES, "pendingDelete"]) {
@@ -153,6 +156,6 @@ export function flashFadeRules(frames: readonly Frame[]): string {
         );
       }
     }
-  });
+  }
   return rules.join("\n");
 }

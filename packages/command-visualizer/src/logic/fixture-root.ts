@@ -24,20 +24,21 @@
 
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import path from "node:path";
+import { env } from "node:process";
 
 /** Absolute path to the cursorless repo root (env override, else $HOME/code/cursorless). */
 export function cursorlessRepoRoot(): string {
-  const fromEnv = process.env.CURSORLESS_REPO?.trim();
+  const fromEnv = env.CURSORLESS_REPO?.trim();
   const root =
     fromEnv && fromEnv.length > 0
       ? fromEnv
-      : join(homedir(), "code", "cursorless");
+      : path.join(homedir(), "code", "cursorless");
 
   if (!existsSync(root)) {
     const how = fromEnv
-      ? '$CURSORLESS_REPO is set to "' + root + '"'
-      : 'defaulted to "' + root + '" ($HOME/code/cursorless)';
+      ? `$CURSORLESS_REPO is set to "${root}"`
+      : `defaulted to "${root}" ($HOME/code/cursorless)`;
     throw new Error(
       `cursorless repo not found: ${how}, but that path does not exist.\n` +
         `Set CURSORLESS_REPO to your cursorless checkout, e.g.\n` +
@@ -51,12 +52,12 @@ export function cursorlessRepoRoot(): string {
 export function hatsRoot(): string {
   const root = cursorlessRepoRoot();
   // Layout A (mini2 fork): resources/images/hats/
-  const layoutA = join(root, "resources", "images", "hats");
+  const layoutA = path.join(root, "resources", "images", "hats");
   if (existsSync(layoutA)) {
     return layoutA;
   }
   // Layout B (main repo): images/hats/
-  const layoutB = join(root, "images", "hats");
+  const layoutB = path.join(root, "images", "hats");
   if (existsSync(layoutB)) {
     return layoutB;
   }
@@ -70,12 +71,12 @@ export function hatsRoot(): string {
 export function fixtureRoot(): string {
   const root = cursorlessRepoRoot();
   // Layout A (mini2 fork): resources/fixtures/recorded/
-  const layoutA = join(root, "resources", "fixtures", "recorded");
+  const layoutA = path.join(root, "resources", "fixtures", "recorded");
   if (existsSync(layoutA)) {
     return layoutA;
   }
   // Layout B (main repo): data/fixtures/recorded/
-  const layoutB = join(root, "data", "fixtures", "recorded");
+  const layoutB = path.join(root, "data", "fixtures", "recorded");
   if (existsSync(layoutB)) {
     return layoutB;
   }

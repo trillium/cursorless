@@ -1,11 +1,12 @@
 // Serializer. Pure state JSON → HTML string. No render-time logic.
 
-import type { Theme } from "../data/colors";
-import { type Column, type Line, expandColumns, lineWidth } from "../model/columns";
 import type { Position, Range } from "@cursorless/lib-common";
+import type { Theme } from "../data/colors";
+import { expandColumns, lineWidth } from "../model/columns";
+import type { Column, Line } from "../model/columns";
 import { styleSheet } from "./css";
-import { symbolSheet } from "./symbols";
 import { esc } from "./html";
+import { symbolSheet } from "./symbols";
 
 export interface EditorState {
   theme: Theme;
@@ -52,12 +53,7 @@ function charToCol(cols: Column[], charIndex: number): number {
 
 function emitSpan(c: Column, lineIdx: number, selections: Range[]): string {
   const classes = c.isAnchor ? "ch ch--anchor" : "ch";
-  const spanAttr =
-    c.width === 2
-      ? ` data-col-span="2"`
-      : c.width > 2
-        ? ` data-col-span="${c.width}"`
-        : "";
+  const spanAttr = c.width > 1 ? ` data-col-span="${c.width}"` : "";
   const selAttr = inAnySelection(lineIdx, c.charIndex, selections)
     ? ' data-sel=""'
     : "";
