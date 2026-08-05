@@ -49,15 +49,11 @@ export interface Column {
 // East_Asian_Width Wide (W) + Fullwidth (F) ranges. Covers CJK, Hangul,
 // fullwidth forms, kana, common emoji presentation. Sufficient for the
 // column-model torture test; extend the table if a fixture needs more.
-// Two hex-literal style rules are switched off for this table only:
-//
-// - numeric-separators-style would write these as `0x1_F300`. They are Unicode
-//   code points and have to stay readable as the `U+XXXX` values the Unicode
-//   charts publish; a grouped form corresponds to nothing you can look up.
-// - number-literal-case wants uppercase digits (`0x115F`), but `pnpm lint:fmt`
-//   runs oxfmt, which rewrites hex digits to lowercase. The two halves of
-//   `pnpm lint` disagree, so no spelling of these literals passes both.
-/* oxlint-disable unicorn/numeric-separators-style, unicorn/number-literal-case */
+// numeric-separators-style is switched off for this table only: it would write
+// these as `0x1_F300`. They are Unicode code points and have to stay readable as
+// the `U+XXXX` values the Unicode charts publish; a grouped form corresponds to
+// nothing you can look up.
+/* oxlint-disable unicorn/numeric-separators-style */
 const WIDE_RANGES: ReadonlyArray<readonly [number, number]> = [
   // Hangul Jamo
   [0x1100, 0x115f],
@@ -92,7 +88,7 @@ const WIDE_RANGES: ReadonlyArray<readonly [number, number]> = [
   // CJK Ext B+ (SIP/TIP)
   [0x20000, 0x3fffd],
 ];
-/* oxlint-enable unicorn/numeric-separators-style, unicorn/number-literal-case */
+/* oxlint-enable unicorn/numeric-separators-style */
 
 function isWideCodePoint(cp: number): boolean {
   for (const [lo, hi] of WIDE_RANGES) {
