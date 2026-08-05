@@ -3,10 +3,10 @@
 // dependency-free leaf module so the markup and CSS modules never import each
 // other (avoids a cycle) and never duplicate these. render/ → render/ only.
 
-import type { CascadeState } from "../model/types";
 import type { Timeline } from "../model/timeline";
+import type { CascadeState } from "../model/types";
 
-export const NL = String.fromCharCode(10);
+export const NL = String.fromCodePoint(10);
 
 /** Commands carried by the frames, in order. */
 export function frameCommands(state: CascadeState): string[] {
@@ -23,17 +23,21 @@ export function timelinePct(tl: Timeline): {
 } {
   const durMs = tl.totalMs;
   const msPct = (ms: number) => (ms / durMs) * 100;
-  const pctc = (x: number) => `${Math.max(0, Math.min(100, x)).toFixed(3)}%`;
   return { msPct, pctc };
+}
+
+/** Clamp to 0-100 and format as a keyframe percentage. */
+function pctc(x: number): string {
+  return `${Math.max(0, Math.min(100, x)).toFixed(3)}%`;
 }
 
 /** Indices of frames that carry a (non-empty) command — the command-pill slots. */
 export function commandFrameIndices(state: CascadeState): number[] {
   const cmdFrames: number[] = [];
-  state.frames.forEach((f, i) => {
+  for (const [i, f] of state.frames.entries()) {
     if (f.command != null && f.command !== "") {
       cmdFrames.push(i);
     }
-  });
+  }
   return cmdFrames;
 }

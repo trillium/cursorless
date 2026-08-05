@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import type { HatColor } from "@cursorless/lib-common";
-import { allocateHats, cssStateHatStyles } from "./hat-allocator";
 import type { InputHat, Line, Token } from "../model/columns";
+import { allocateHats, cssStateHatStyles } from "./hat-allocator";
 
 // Build a Line whose tokens are one-per-grapheme (the render model, tokenize.ts
 // R5) with line-relative UTF-16 ranges. Spaces are emitted as their own tokens
@@ -20,6 +20,15 @@ function markToken(l: Line, character: number, hat: InputHat): Token {
   assert.ok(token, `no token at character ${character}`);
   token.hat = hat;
   return token;
+}
+
+/** Every allocated hat as "{startOffset}:{color}/{shape}", per line. */
+function snapshot(lines: Line[]): string[][] {
+  return lines.map((l) =>
+    l.tokens.map((t) =>
+      t.hat ? `${t.range.start}:${t.hat.color}/${t.hat.shape}` : "",
+    ),
+  );
 }
 
 function countHatted(lines: Line[]): number {
@@ -85,7 +94,8 @@ suite("command-visualizer/hat-allocator", () => {
       // same color it went in with.
       const l = line("hello world");
       const pinnedColor: HatColor = "yellow";
-      const worldStart = "hello ".length; // char index of "w"
+      // char index of "w"
+      const worldStart = "hello ".length;
       const marked = markToken(l, worldStart, {
         color: pinnedColor,
         shape: "default",
@@ -119,13 +129,6 @@ suite("command-visualizer/hat-allocator", () => {
       const b = build();
       allocateHats(a);
       allocateHats(b);
-
-      const snapshot = (lines: Line[]) =>
-        lines.map((l) =>
-          l.tokens.map((t) =>
-            t.hat ? `${t.range.start}:${t.hat.color}/${t.hat.shape}` : "",
-          ),
-        );
 
       assert.deepEqual(snapshot(a), snapshot(b));
     });

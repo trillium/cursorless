@@ -2,12 +2,18 @@
 // Generated from the single-sourced decoration hexes so the
 // band colors never drift. Theme-INVARIANT (background-only translucent hexes).
 
-import { DECORATION_HEX, ALL_DECORATION_STYLES } from "../data/decorations";
-import { FLASH_STYLES, HIGHLIGHT_STYLES } from "../data/decorations";
-import { FLASH_PULSE_MS } from "../data/decorations";
+import {
+  ALL_DECORATION_STYLES,
+  DECORATION_HEX,
+  FLASH_PULSE_MS,
+  FLASH_STYLES,
+  HIGHLIGHT_STYLES,
+} from "../data/decorations";
+import { timelineOf } from "../model/timeline";
+import type { Timeline } from "../model/timeline";
 import type { Frame } from "../model/types";
-import { timelineOf, type Timeline } from "../model/timeline";
 import { flashFadeKeyframes, flashFadeRules } from "./css-cascade-flash";
+import { pct } from "./css-shared";
 
 // §3.2 — char-range bands on the per-char grid (one bg attr per .ch).
 // The STATIC path (single-frame PNG renders, animate=false): the band is just a
@@ -25,7 +31,7 @@ function charBandRules(): string {
 // Shared %-formatter — used here (frameKeyframes) and by the extracted
 // flash-fade module. Exported so css-cascade-flash.ts reuses the exact impl
 // (render/ → render/ import; no duplication).
-export const pct = (x: number): string => x.toFixed(3);
+export { pct } from "./css-shared";
 
 // The flash TIMING section (DURING beats: delete, insert, reference pre-edit
 // flashes) lives in ./css-cascade-flash — imported above. See that module's
