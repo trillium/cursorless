@@ -19,8 +19,9 @@
   "scripts": {
     "typecheck": "tsc",
     "clean": "docusaurus clear && rm -rf ./out ./dist ./tsconfig.tsbuildinfo",
-    "dev": "docusaurus start",
-    "build": "docusaurus build --out-dir out"
+    "dev": "pnpm generate:command-svgs && docusaurus start",
+    "build": "pnpm generate:command-svgs && docusaurus build --out-dir out",
+    "generate:command-svgs": "tsx scripts/generate-command-svgs.ts"
   },
   "dependencies": {
     "@algolia/client-search": "^5.55.1",
@@ -42,6 +43,7 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
+    "@cursorless/command-visualizer": "workspace:*",
     "@cursorless/lib-node-common": "workspace:*",
     "@docusaurus/module-type-aliases": "^3.10.1",
     "@docusaurus/types": "^3.10.1",
@@ -50,6 +52,7 @@
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "sass": "^1.101.0",
+    "tsx": "^4.22.5",
     "typescript": "^6.0.3",
     "unified": "^11.0.5"
   }
