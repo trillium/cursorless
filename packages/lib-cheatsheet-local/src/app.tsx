@@ -1,5 +1,5 @@
-import type { CheatsheetInfo } from "@cursorless/lib-cheatsheet";
 import { Cheatsheet } from "@cursorless/lib-cheatsheet";
+import type { CheatsheetInfo } from "@cursorless/lib-common";
 import "./styles.css";
 
 declare global {
@@ -16,5 +16,8 @@ declare global {
 }
 
 export function App() {
+  if (document.cheatsheetInfo == null) {
+    throw new Error("Cheatsheet info is not available on the document.");
+  }
   return <Cheatsheet cheatsheetInfo={document.cheatsheetInfo} />;
 }

@@ -107,6 +107,7 @@ export const rubyScopeSupport: LanguageScopeSupportFacetMap = {
   "textFragment.comment.line": supported,
   "textFragment.string.singleLine": supported,
   "textFragment.string.multiLine": supported,
+  "textFragment.regularExpression": supported,
 
   "name.argument.actual": supported,
   "name.argument.actual.iteration": supported,
@@ -224,14 +225,14 @@ export const rubyScopeSupport: LanguageScopeSupportFacetMap = {
   "value.field.enum": notApplicable,
   "value.iteration.enum": notApplicable,
   "interior.enum": notApplicable,
-  "functionCall.enum": notApplicable,
-  "functionCallee.enum": notApplicable,
-  "argument.actual.enum.singleLine": notApplicable,
-  "argument.actual.enum.multiLine": notApplicable,
-  "argumentList.actual.enum.empty": notApplicable,
-  "argumentList.actual.enum.singleLine": notApplicable,
-  "argumentList.actual.enum.multiLine": notApplicable,
-  "argument.actual.enum.iteration": notApplicable,
+  "functionCall.enumConstant": notApplicable,
+  "functionCallee.enumConstant": notApplicable,
+  "argument.actual.enumConstant.singleLine": notApplicable,
+  "argument.actual.enumConstant.multiLine": notApplicable,
+  "argumentList.actual.enumConstant.empty": notApplicable,
+  "argumentList.actual.enumConstant.singleLine": notApplicable,
+  "argumentList.actual.enumConstant.multiLine": notApplicable,
+  "argument.actual.enumConstant.iteration": notApplicable,
 
   // Type system
   "type.argument.formal": notApplicable,
@@ -351,6 +352,20 @@ export const rubyScopeSupport: LanguageScopeSupportFacetMap = {
   "statement.for": notApplicable,
   "condition.for": notApplicable,
   "interior.for": notApplicable,
+
+  // Document
+  chapter: notApplicable,
+  subSection: notApplicable,
+  subSubSection: notApplicable,
+  sectionLevelOne: notApplicable,
+  sectionLevelTwo: notApplicable,
+  sectionLevelThree: notApplicable,
+  sectionLevelFour: notApplicable,
+  sectionLevelFive: notApplicable,
+  sectionLevelSix: notApplicable,
+  namedParagraph: notApplicable,
+  subParagraph: notApplicable,
+  part: notApplicable,
 
   // Misc
   "statement.package": notApplicable,

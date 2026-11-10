@@ -207,14 +207,14 @@ export const xmlScopeSupport: LanguageScopeSupportFacetMap = {
 
   // Enum
   "statement.enum": notApplicable,
-  "functionCallee.enum": notApplicable,
-  "functionCall.enum": notApplicable,
-  "argument.actual.enum.singleLine": notApplicable,
-  "argument.actual.enum.multiLine": notApplicable,
-  "argumentList.actual.enum.empty": notApplicable,
-  "argumentList.actual.enum.singleLine": notApplicable,
-  "argumentList.actual.enum.multiLine": notApplicable,
-  "argument.actual.enum.iteration": notApplicable,
+  "functionCallee.enumConstant": notApplicable,
+  "functionCall.enumConstant": notApplicable,
+  "argument.actual.enumConstant.singleLine": notApplicable,
+  "argument.actual.enumConstant.multiLine": notApplicable,
+  "argumentList.actual.enumConstant.empty": notApplicable,
+  "argumentList.actual.enumConstant.singleLine": notApplicable,
+  "argumentList.actual.enumConstant.multiLine": notApplicable,
+  "argument.actual.enumConstant.iteration": notApplicable,
   "name.enum": notApplicable,
   "name.field.enum": notApplicable,
   "name.iteration.enum": notApplicable,
@@ -341,6 +341,10 @@ export const xmlScopeSupport: LanguageScopeSupportFacetMap = {
   "name.typeAlias": notApplicable,
   "value.typeAlias": notApplicable,
 
+  // Regular expression literal
+  regularExpression: notApplicable,
+  "textFragment.regularExpression": notApplicable,
+
   // Miscellaneous statements
   "statement.break": notApplicable,
   "statement.continue": notApplicable,
@@ -350,13 +354,26 @@ export const xmlScopeSupport: LanguageScopeSupportFacetMap = {
   "statement.iteration.document": notApplicable,
   "statement.iteration.block": notApplicable,
 
+  // Document
+  chapter: notApplicable,
+  subSection: notApplicable,
+  subSubSection: notApplicable,
+  sectionLevelOne: notApplicable,
+  sectionLevelTwo: notApplicable,
+  sectionLevelThree: notApplicable,
+  sectionLevelFour: notApplicable,
+  sectionLevelFive: notApplicable,
+  sectionLevelSix: notApplicable,
+  namedParagraph: notApplicable,
+  subParagraph: notApplicable,
+  part: notApplicable,
+
   // Miscellaneous
   environment: notApplicable,
   fieldAccess: notApplicable,
   "name.iteration.block": notApplicable,
   "name.iteration.document": notApplicable,
   pairDelimiter: notApplicable,
-  regularExpression: notApplicable,
   "type.cast": notApplicable,
   "type.typeArgument": notApplicable,
   "type.typeArgument.iteration": notApplicable,

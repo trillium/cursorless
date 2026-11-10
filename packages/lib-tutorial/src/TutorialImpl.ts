@@ -1,12 +1,12 @@
 import { produce } from "immer";
 import { isEqual } from "lodash-es";
 import type {
-  CharacterRange,
   Disposable,
+  GeneralizedRange,
   Hats,
   HatTokenMap,
   IDE,
-  RawTutorialContent,
+  ResolvedTutorialContent,
   ReadOnlyHatMap,
   ScopeType,
   TextEditor,
@@ -14,7 +14,11 @@ import type {
   TutorialId,
   TutorialState,
 } from "@cursorless/lib-common";
-import { Debouncer, Notifier } from "@cursorless/lib-common";
+import {
+  Debouncer,
+  getTutorialsForContext,
+  Notifier,
+} from "@cursorless/lib-common";
 import type {
   CommandRunner,
   CommandRunnerDecorator,
@@ -40,7 +44,7 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
    * if any. We store these so that we can remove them when user has gone off
    * the tutorial path and then restore them when they come back.
    */
-  private highlightRanges: CharacterRange[] = [];
+  private highlightRanges: GeneralizedRange[] = [];
 
   /**
    * The current state of the tutorial, as exposed by {@link Tutorial.state}.
@@ -57,11 +61,7 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
 
   private disposables: Disposable[] = [];
 
-  /**
-   * The raw tutorials that are available to the user. These are the tutorials
-   * that are loaded from disk and have not been parsed yet.
-   */
-  private rawTutorials!: RawTutorialContent[];
+  private rawTutorials: ResolvedTutorialContent[];
 
   constructor(
     private ide: IDE,
@@ -73,12 +73,11 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
     const debouncer = new Debouncer(() => this.checkPreconditions(), 100);
     const runDebouncer = () => debouncer.run();
 
-    void (async () => {
-      await this.loadTutorials();
-      if (this.state_.type === "loading") {
-        this.setState(this.getPickingTutorialState());
-      }
-    })();
+    this.rawTutorials = getTutorialsForContext("interactive");
+
+    if (this.state_.type === "loading") {
+      this.setState(this.getPickingTutorialState());
+    }
 
     this.disposables.push(
       this.ide.onDidChangeActiveTextEditor(runDebouncer),
@@ -102,8 +101,10 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
    * @param scopeType The scope type that was visualized
    */
   scopeTypeVisualized(scopeType: ScopeType | undefined): void {
-    if (this.state_.type === "doingTutorial") {
-      const currentStep = this.currentTutorial!.steps[this.state_.stepNumber];
+    const state = this.state_;
+
+    if (state.type === "doingTutorial" && !state.hasErrors) {
+      const currentStep = this.currentTutorial!.steps[state.stepNumber];
       if (
         currentStep.trigger?.type === "visualize" &&
         isEqual(currentStep.trigger.scopeType, scopeType)
@@ -111,10 +112,6 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
         void this.next();
       }
     }
-  }
-
-  async loadTutorials() {
-    this.rawTutorials = await this.contentProvider.loadRawTutorials();
   }
 
   /**
@@ -129,7 +126,6 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
       tutorials: this.rawTutorials.map((rawContent) => ({
         id: rawContent.id,
         title: rawContent.title,
-        version: rawContent.version,
         stepCount: rawContent.steps.length,
         currentStep: tutorialProgress[rawContent.id]?.currentStep ?? 0,
       })),
@@ -219,8 +215,10 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
   }
 
   documentationOpened() {
-    if (this.state_.type === "doingTutorial") {
-      const currentStep = this.currentTutorial!.steps[this.state_.stepNumber];
+    const state = this.state_;
+
+    if (state.type === "doingTutorial" && !state.hasErrors) {
+      const currentStep = this.currentTutorial!.steps[state.stepNumber];
       if (currentStep.trigger?.type === "help") {
         void this.next();
       }
@@ -278,8 +276,8 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
     return this.changeStep(() => 0);
   }
 
-  resume() {
-    return this.setupStep();
+  async resume() {
+    await this.setupStep();
   }
 
   async list() {
@@ -300,7 +298,6 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
         produce(this.ide.keyValueStore.get("tutorialProgress"), (draft) => {
           draft[state.id] = {
             currentStep: state.stepNumber,
-            version: this.currentTutorial!.version,
           };
         }),
       );
@@ -347,22 +344,51 @@ export class TutorialImpl implements Tutorial, CommandRunnerDecorator {
   }
 
   private async checkPreconditions() {
-    if (this.state_.type === "doingTutorial") {
-      const currentStep = this.currentTutorial!.steps[this.state_.stepNumber];
+    const state = this.state_;
 
-      const preConditionsMet = await arePreconditionsMet(
-        this.ide.activeTextEditor,
-        this.editor,
-        this.hatTokenMap,
-        currentStep,
+    if (state.type !== "doingTutorial" || state.hasErrors) {
+      return;
+    }
+
+    const currentStep = this.currentTutorial!.steps[state.stepNumber];
+
+    const preconditionError = await arePreconditionsMet(
+      this.ide.activeTextEditor,
+      this.editor,
+      this.hatTokenMap,
+      currentStep,
+    );
+
+    // Verify that the state hasn't changed since we started checking preconditions
+    if (this.state_ !== state) {
+      this.debug(
+        `Tutorial ${state.id} step ${state.stepNumber + 1}: precondition check discarded because the tutorial state changed`,
       );
-      if (preConditionsMet !== this.state_.preConditionsMet) {
-        this.setState({
-          ...this.state_,
-          preConditionsMet,
-        });
-        await this.ensureHighlights();
-      }
+      return;
+    }
+
+    const preConditionsMet = preconditionError == null;
+
+    if (!preConditionsMet) {
+      this.debug(
+        `Tutorial ${state.id} step ${state.stepNumber + 1}: ${preconditionError}`,
+      );
+    }
+
+    // Update the state if the preconditions have changed
+    if (preConditionsMet !== state.preConditionsMet) {
+      this.setState({
+        ...state,
+        preConditionsMet,
+      });
+      await this.ensureHighlights();
+    }
+  }
+
+  private debug(message: string) {
+    const debug = this.ide.configuration.getOwnConfiguration("debug");
+    if (debug) {
+      console.log(message);
     }
   }
 }

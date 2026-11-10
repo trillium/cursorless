@@ -178,11 +178,6 @@
         "enablement": "false"
       },
       {
-        "command": "cursorless.internal.updateCheatsheetDefaults",
-        "title": "Cursorless: Update the default values of the cheatsheet payload used on the website and for local development. Be sure to run this on stock community and cursorless.",
-        "enablement": "false"
-      },
-      {
         "command": "cursorless.private.logQuickActions",
         "title": "Cursorless: Log the quick actions available at the current cursor position",
         "enablement": "false"
@@ -338,27 +333,6 @@
           "default": false,
           "order": 2,
           "description": "Keep a local, sanitized command history. This history is never sent to our servers, and any commands that may contain text will be sanitized. These statistics can be used in the future for doing local analyses to determine ways you can improve your Cursorless efficiency. We may also support a way for you to send your statistics to us for analysis in the future, but this will be opt-in only."
-        },
-        "cursorless.tokenHatSplittingMode.preserveCase": {
-          "type": "boolean",
-          "default": false,
-          "markdownDescription": "Whether to distinguish between uppercase and lower case letters for hats.  Set this to `true` if you have separate terms for uppercase letters in your `<user.any_alphanumeric_key>` capture."
-        },
-        "cursorless.tokenHatSplittingMode.lettersToPreserve": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": [],
-          "description": "A list of characters whose accents should not be stripped. This can be used, for example, if you would like to strip all accents except for those of a few characters, which you would add to this list."
-        },
-        "cursorless.tokenHatSplittingMode.symbolsToPreserve": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": [],
-          "markdownDescription": "A list of symbols that shouldn't be normalized by the token hat splitter. Add any extra symbols here that you have added to your `<user.any_alphanumeric_key>` capture. Unlike the Accents To Preserve setting, these symbols won't even undergo case normalisation, so you would need separate terms for the lowercase and uppercase versions (if the symbol has a notion of upper and lower case)."
         },
         "cursorless.decorationDebounceDelayMs": {
           "type": "number",
@@ -738,7 +712,7 @@
           "additionalProperties": false
         },
         "cursorless.hatEnablement.shapes": {
-          "markdownDescription": "Which shapes to enable.  See the [docs](https://www.cursorless.org/docs/#shapes) if you're not sure which shape name corresponds to which hat shape.",
+          "markdownDescription": "Which shapes to enable.  See the [docs](https://www.cursorless.org/docs/user/targets#shapes) if you're not sure which shape name corresponds to which hat shape.",
           "type": "object",
           "order": 3,
           "properties": {
@@ -1219,7 +1193,7 @@
           }
         },
         "cursorless.experimental.hatStability": {
-          "markdownDescription": "As you scroll, edit, and move your cursor, this setting determines how much Cursorless will move hats around to ensure that the best hats are near the cursor.  See https://www.cursorless.org/docs/user/hatAssignment/",
+          "markdownDescription": "As you scroll, edit, and move your cursor, this setting determines how much Cursorless will move hats around to ensure that the best hats are near the cursor.  See https://www.cursorless.org/docs/user/hat-assignment/",
           "type": "string",
           "default": "balanced",
           "enum": [
@@ -1261,24 +1235,7 @@
           "group": "navigation"
         }
       ]
-    },
-    "languages": [
-      {
-        "id": "talon"
-      },
-      {
-        "id": "talon-list"
-      },
-      {
-        "id": "scala"
-      },
-      {
-        "id": "kotlin"
-      },
-      {
-        "id": "scm"
-      }
-    ]
+    }
   },
   "scripts": {
     "typecheck": "tsc",
@@ -1321,22 +1278,22 @@
     "nearley": "^2.20.1",
     "semver": "^7.8.5",
     "trie-search": "^2.2.1",
-    "uuid": "^14.0.1",
-    "vscode-uri": "^3.1.0"
+    "uuid": "^14.0.3",
+    "vscode-uri": "^3.2.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/lodash-es": "^4.17.12",
     "@types/mocha": "^10.0.10",
     "@types/nearley": "^2.11.5",
-    "@types/node": "^24.13.2",
-    "@types/semver": "^7.7.1",
+    "@types/node": "^24.19.2",
+    "@types/semver": "^7.8.0",
     "@types/sinon": "^22.0.0",
     "@types/vscode": "1.98.0",
-    "esbuild": "^0.28.1",
-    "fast-xml-parser": "^5.9.3",
-    "fs-extra": "^11.3.6",
-    "sinon": "^22.0.0",
-    "tsx": "^4.22.5"
+    "esbuild": "^0.28.2",
+    "fast-xml-parser": "^5.11.2",
+    "fs-extra": "^11.4.1",
+    "sinon": "^22.1.0",
+    "tsx": "^4.23.15"
   }
 }

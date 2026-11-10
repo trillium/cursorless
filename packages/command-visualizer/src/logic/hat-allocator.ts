@@ -36,6 +36,7 @@
 
 import {
   FakeIDE,
+  FakeTalonSpokenForms,
   HAT_COLORS,
   HAT_SHAPES,
   HatStability,
@@ -147,7 +148,10 @@ export function allocateHats(
   });
 
   // (3) Real cursorless grapheme splitter (IDE-configured).
-  const tokenGraphemeSplitter = new TokenGraphemeSplitter(ide);
+  const tokenGraphemeSplitter = new TokenGraphemeSplitter(
+    ide,
+    FakeTalonSpokenForms.fromGraphemes([]),
+  );
 
   // (4) Collect fixture marks from the render tokens carrying a pass-1 hat.
   const marks: Mark[] = [];

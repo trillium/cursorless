@@ -124,9 +124,8 @@ suite("command-visualizer/hat-allocator", () => {
     });
 
     test("is deterministic: same input yields the same assignment", () => {
-      const build = () => [line("value width height")];
-      const a = build();
-      const b = build();
+      const a = [line("value width height")];
+      const b = [line("value width height")];
       allocateHats(a);
       allocateHats(b);
 
