@@ -245,14 +245,32 @@ export const cCoreScopeSupport: LanguageScopeSupportFacetMap = {
   "value.throw": notApplicable,
 
   // Enum calls
-  "functionCall.enum": notApplicable,
-  "functionCallee.enum": notApplicable,
-  "argument.actual.enum.singleLine": notApplicable,
-  "argument.actual.enum.multiLine": notApplicable,
-  "argumentList.actual.enum.empty": notApplicable,
-  "argumentList.actual.enum.singleLine": notApplicable,
-  "argumentList.actual.enum.multiLine": notApplicable,
-  "argument.actual.enum.iteration": notApplicable,
+  "functionCall.enumConstant": notApplicable,
+  "functionCallee.enumConstant": notApplicable,
+  "argument.actual.enumConstant.singleLine": notApplicable,
+  "argument.actual.enumConstant.multiLine": notApplicable,
+  "argumentList.actual.enumConstant.empty": notApplicable,
+  "argumentList.actual.enumConstant.singleLine": notApplicable,
+  "argumentList.actual.enumConstant.multiLine": notApplicable,
+  "argument.actual.enumConstant.iteration": notApplicable,
+
+  // Document
+  chapter: notApplicable,
+  subSection: notApplicable,
+  subSubSection: notApplicable,
+  sectionLevelOne: notApplicable,
+  sectionLevelTwo: notApplicable,
+  sectionLevelThree: notApplicable,
+  sectionLevelFour: notApplicable,
+  sectionLevelFive: notApplicable,
+  sectionLevelSix: notApplicable,
+  namedParagraph: notApplicable,
+  subParagraph: notApplicable,
+  part: notApplicable,
+
+  // Regular expression literal
+  regularExpression: notApplicable,
+  "textFragment.regularExpression": notApplicable,
 
   // Miscellaneous
   "key.attribute": notApplicable,
@@ -263,7 +281,6 @@ export const cCoreScopeSupport: LanguageScopeSupportFacetMap = {
   "statement.misc": notApplicable,
   environment: notApplicable,
   pairDelimiter: notApplicable,
-  regularExpression: notApplicable,
   selector: notApplicable,
   unit: notApplicable,
 };

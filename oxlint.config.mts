@@ -28,6 +28,7 @@ const disabledRules = [
   "eslint/no-underscore-dangle",
   "eslint/no-use-before-define",
   "eslint/no-void",
+  "eslint/one-var",
   "eslint/prefer-destructuring",
   "eslint/prefer-named-capture-group",
   "eslint/sort-imports",
@@ -44,6 +45,7 @@ const disabledRules = [
   "import/prefer-default-export",
   "node/callback-return",
   "node/no-sync",
+  "node/no-top-level-await",
   "oxc/no-async-await",
   "oxc/no-barrel-file",
   "oxc/no-map-spread",
@@ -56,6 +58,7 @@ const disabledRules = [
   "react/forbid-component-props",
   "react/jsx-max-depth",
   "react/jsx-no-literals",
+  "react/no-array-index-key",
   "react/no-multi-comp",
   "react/only-export-components",
   "react/react-in-jsx-scope",
@@ -132,6 +135,13 @@ export default defineConfig({
 
   rules: {
     ...Object.fromEntries(disabledRules.map((r) => [r, "off"])),
+    "eslint/eqeqeq": [
+      "warn",
+      "always",
+      {
+        null: "never",
+      },
+    ],
     "eslint/no-duplicate-imports": [
       "warn",
       {
@@ -179,13 +189,6 @@ export default defineConfig({
       "warn",
       {
         extensions: [".tsx"],
-      },
-    ],
-    eqeqeq: [
-      "warn",
-      "always",
-      {
-        null: "never",
       },
     ],
   },

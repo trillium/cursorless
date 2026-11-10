@@ -19,6 +19,7 @@ export const javascriptCoreScopeSupport: LanguageScopeSupportFacetMap = {
   "textFragment.string.multiLine": supported,
   "textFragment.comment.line": supported,
   "textFragment.comment.block": supported,
+  "textFragment.regularExpression": supported,
 
   ifStatement: supported,
 
@@ -260,6 +261,20 @@ export const javascriptCoreScopeSupport: LanguageScopeSupportFacetMap = {
   "branch.loop": notApplicable,
   "branch.loop.iteration": notApplicable,
 
+  // Document
+  chapter: notApplicable,
+  subSection: notApplicable,
+  subSubSection: notApplicable,
+  sectionLevelOne: notApplicable,
+  sectionLevelTwo: notApplicable,
+  sectionLevelThree: notApplicable,
+  sectionLevelFour: notApplicable,
+  sectionLevelFive: notApplicable,
+  sectionLevelSix: notApplicable,
+  namedParagraph: notApplicable,
+  subParagraph: notApplicable,
+  part: notApplicable,
+
   // Miscellaneous
   environment: notApplicable,
   selector: notApplicable,
@@ -284,6 +299,8 @@ export const javascriptScopeSupport: LanguageScopeSupportFacetMap = {
 
   // These are defined here because we don't want typescript to import them and
   // accidentally forget to add support for them.
+
+  /* NOT APPLICABLE */
 
   // Type
   "type.argument.formal": notApplicable,
@@ -341,14 +358,14 @@ export const javascriptScopeSupport: LanguageScopeSupportFacetMap = {
   "value.iteration.enum": notApplicable,
   "type.enum": notApplicable,
   "interior.enum": notApplicable,
-  "functionCall.enum": notApplicable,
-  "functionCallee.enum": notApplicable,
-  "argument.actual.enum.singleLine": notApplicable,
-  "argument.actual.enum.multiLine": notApplicable,
-  "argumentList.actual.enum.empty": notApplicable,
-  "argumentList.actual.enum.singleLine": notApplicable,
-  "argumentList.actual.enum.multiLine": notApplicable,
-  "argument.actual.enum.iteration": notApplicable,
+  "functionCall.enumConstant": notApplicable,
+  "functionCallee.enumConstant": notApplicable,
+  "argument.actual.enumConstant.singleLine": notApplicable,
+  "argument.actual.enumConstant.multiLine": notApplicable,
+  "argumentList.actual.enumConstant.empty": notApplicable,
+  "argumentList.actual.enumConstant.singleLine": notApplicable,
+  "argumentList.actual.enumConstant.multiLine": notApplicable,
+  "argument.actual.enumConstant.iteration": notApplicable,
 
   // Miscellaneous
   "statement.misc": notApplicable,

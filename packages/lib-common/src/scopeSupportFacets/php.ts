@@ -243,7 +243,7 @@ export const phpScopeSupport: LanguageScopeSupportFacetMap = {
 
   fieldAccess: unsupported,
 
-  /* NOT APPLunICABLE */
+  /* NOT APPLICABLE */
 
   // XML/HTML facets
   element: notApplicable,
@@ -294,14 +294,14 @@ export const phpScopeSupport: LanguageScopeSupportFacetMap = {
   "type.typeArgument.iteration": notApplicable,
 
   // Enum constructor call.
-  "functionCall.enum": notApplicable,
-  "functionCallee.enum": notApplicable,
-  "argument.actual.enum.singleLine": notApplicable,
-  "argument.actual.enum.multiLine": notApplicable,
-  "argumentList.actual.enum.empty": notApplicable,
-  "argumentList.actual.enum.singleLine": notApplicable,
-  "argumentList.actual.enum.multiLine": notApplicable,
-  "argument.actual.enum.iteration": notApplicable,
+  "functionCall.enumConstant": notApplicable,
+  "functionCallee.enumConstant": notApplicable,
+  "argument.actual.enumConstant.singleLine": notApplicable,
+  "argument.actual.enumConstant.multiLine": notApplicable,
+  "argumentList.actual.enumConstant.empty": notApplicable,
+  "argumentList.actual.enumConstant.singleLine": notApplicable,
+  "argumentList.actual.enumConstant.multiLine": notApplicable,
+  "argument.actual.enumConstant.iteration": notApplicable,
 
   // Uninitialized variables
   "statement.variable.uninitialized": notApplicable,
@@ -334,13 +334,30 @@ export const phpScopeSupport: LanguageScopeSupportFacetMap = {
   "name.typeAlias": notApplicable,
   "value.typeAlias": notApplicable,
 
+  // Document
+  chapter: notApplicable,
+  subSection: notApplicable,
+  subSubSection: notApplicable,
+  sectionLevelOne: notApplicable,
+  sectionLevelTwo: notApplicable,
+  sectionLevelThree: notApplicable,
+  sectionLevelFour: notApplicable,
+  sectionLevelFive: notApplicable,
+  sectionLevelSix: notApplicable,
+  namedParagraph: notApplicable,
+  subParagraph: notApplicable,
+  part: notApplicable,
+
+  // Regular expression literal
+  regularExpression: notApplicable,
+  "textFragment.regularExpression": notApplicable,
+
   // Miscellaneous
   "statement.misc": notApplicable,
   "type.variable.initialized": notApplicable,
   "type.foreach": notApplicable,
   "type.iteration.block": notApplicable,
   "class.iteration.class": notApplicable,
-  regularExpression: notApplicable,
   environment: notApplicable,
   selector: notApplicable,
   unit: notApplicable,

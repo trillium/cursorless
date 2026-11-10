@@ -6,9 +6,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "tsc",
+    "typecheck": "tsc && tsc -p ./test/tsconfig.json",
     "clean": "rm -rf ./out ./dist ./tsconfig.tsbuildinfo",
-    "test": "jest",
     "dev": "env NODE_OPTIONS=--import=tsx vite serve",
     "bundle:prod": "env NODE_OPTIONS=--import=tsx vite build",
     "bundle:dev": "env NODE_OPTIONS=--import=tsx vite build --mode development",
@@ -18,15 +17,15 @@
     "@cursorless/lib-cheatsheet": "workspace:*",
     "@cursorless/lib-common": "workspace:*",
     "bootstrap": "^5.3.8",
-    "preact": "^10.29.3"
+    "preact": "^11.0.1"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.13.2",
-    "jest": "^30.4.2",
-    "typescript": "^6.0.3",
-    "vite": "^8.1.3",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.19.2",
+    "mocha": "^12.0.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
     "vite-plugin-purgecss": "^0.2.13",
-    "vite-plugin-singlefile": "^2.3.3"
+    "vite-plugin-singlefile": "^2.3.4"
   }
 }

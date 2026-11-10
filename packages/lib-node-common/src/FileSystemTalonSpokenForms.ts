@@ -4,27 +4,26 @@ import type {
   Disposable,
   FileSystem,
   Listener,
-  SpokenFormEntry,
   TalonSpokenForms,
+  TalonSpokenFormsPayload,
 } from "@cursorless/lib-common";
 import { NeedsInitialTalonUpdateError, Notifier } from "@cursorless/lib-common";
 import { isEnoentError } from "./isError";
 
-interface TalonSpokenFormsPayload {
-  version: number;
-  spokenForms: SpokenFormEntry[];
-}
-
-const LATEST_SPOKEN_FORMS_JSON_VERSION = 0;
+const LATEST_SPOKEN_FORMS_JSON_VERSION = 1;
 
 export class FileSystemTalonSpokenForms implements TalonSpokenForms {
   private disposable: Disposable;
   private notifier = new Notifier();
+  private payloadPromise?: Promise<TalonSpokenFormsPayload>;
 
   constructor(private fileSystem: FileSystem) {
     this.disposable = this.fileSystem.watchDir(
       path.dirname(this.fileSystem.cursorlessTalonStateJsonPath),
-      () => this.notifier.notifyListeners(),
+      () => {
+        this.payloadPromise = undefined;
+        this.notifier.notifyListeners();
+      },
     );
   }
 
@@ -37,12 +36,34 @@ export class FileSystemTalonSpokenForms implements TalonSpokenForms {
     return this.notifier.registerListener(listener);
   }
 
-  async getSpokenFormEntries(): Promise<SpokenFormEntry[]> {
+  async getSpokenForms(): Promise<TalonSpokenFormsPayload> {
+    if (this.payloadPromise != null) {
+      return this.payloadPromise;
+    }
+    const promise = this.readStateFile();
+    this.payloadPromise = promise;
+    try {
+      return await promise;
+    } catch (error) {
+      if (this.payloadPromise === promise) {
+        this.payloadPromise = undefined;
+      }
+      throw error;
+    }
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  private async readStateFile(): Promise<TalonSpokenFormsPayload> {
     let payload: TalonSpokenFormsPayload;
     try {
-      payload = JSON.parse(
-        await readFile(this.fileSystem.cursorlessTalonStateJsonPath, "utf8"),
+      const stateFileContent = await readFile(
+        this.fileSystem.cursorlessTalonStateJsonPath,
+        "utf8",
       );
+      payload = JSON.parse(stateFileContent);
     } catch (error) {
       if (isEnoentError(error)) {
         throw new NeedsInitialTalonUpdateError(
@@ -53,17 +74,12 @@ export class FileSystemTalonSpokenForms implements TalonSpokenForms {
       throw error;
     }
 
-    if (payload.version !== LATEST_SPOKEN_FORMS_JSON_VERSION) {
-      // In the future, we'll need to handle migrations. Not sure exactly how yet.
+    if (payload.version > LATEST_SPOKEN_FORMS_JSON_VERSION) {
       throw new Error(
-        `Invalid spoken forms version. Expected ${LATEST_SPOKEN_FORMS_JSON_VERSION} but got ${payload.version}`,
+        `Unsupported spoken forms version ${payload.version}. Supported versions: 0-${LATEST_SPOKEN_FORMS_JSON_VERSION}`,
       );
     }
 
-    return payload.spokenForms;
-  }
-
-  dispose() {
-    this.disposable.dispose();
+    return payload;
   }
 }
